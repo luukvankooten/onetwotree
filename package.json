@@ -1,0 +1,27 @@
+{
+  "name": "onetwotree",
+  "version": "1.0.0",
+  "description": "Rate music",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luukvankooten/onetwotree.git"
+  },
+  "keywords": [
+    "rate",
+    "music"
+  ],
+  "author": "Luuk van Kooten",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luukvankooten/onetwotree/issues"
+  },
+  "homepage": "https://github.com/luukvankooten/onetwotree#readme",
+  "workspaces": [
+    "packages/server",
+    "packages/client"
+  ]
+}
