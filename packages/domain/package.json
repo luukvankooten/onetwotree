@@ -1,7 +1,7 @@
 {
-  "name": "onetwotree",
+  "name": "12three-domain",
   "version": "1.0.0",
-  "description": "Rate music",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,19 +10,10 @@
     "type": "git",
     "url": "git+https://github.com/luukvankooten/onetwotree.git"
   },
-  "keywords": [
-    "rate",
-    "music"
-  ],
-  "author": "Luuk van Kooten",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/luukvankooten/onetwotree/issues"
   },
-  "homepage": "https://github.com/luukvankooten/onetwotree#readme",
-  "workspaces": [
-    "packages/server",
-    "packages/app",
-    "packages/domain"
-  ]
+  "homepage": "https://github.com/luukvankooten/onetwotree#readme"
 }
