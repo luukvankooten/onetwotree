@@ -6,15 +6,23 @@ This project is a school project. Its goal to rate music and leave commands on p
 
 ```
 packages/
-	server/
-		"The server with API and html serving"
-	client/
-		"The code for the UI"
-	domain/
-		"The domain models"
-	services/
-		"The entity objects"
+	server/				"Server with API and html serving"
+	app/				"Code for the UI"
+	domain/				"Domain models"
+	services/			"Entity objects"
 ```
 
-## Getting  started
+## Scripts
 
+`npm run build -ws`
+
+Build all to the build directory
+
+### Build output
+
+```
+build/
+	app/
+	domain/
+	server/ 
+```
