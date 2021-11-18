@@ -1,14 +1,19 @@
 {
-  "name": "server",
+  "name": "@12tree/server",
   "version": "1.0.0",
   "description": "the backend of the onetwotree",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "nodemon server.ts"
   },
   "keywords": [
     "server"
   ],
   "author": "Luuk van Kooten",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "@12tree/domain": "^1.0.0"
+  }
 }
