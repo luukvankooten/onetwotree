@@ -1,10 +1,5 @@
 {
   "private": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build -ws",
-    "run": "ts-node ./packages/server/server.ts"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/luukvankooten/onetwotree.git"
