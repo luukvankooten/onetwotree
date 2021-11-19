@@ -20,7 +20,15 @@
     "packages/domain"
   ],
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
     "dotenv": "^10.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^19.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "nodemon": "^2.0.15",
     "typescript": "^4.4.4"
   }
