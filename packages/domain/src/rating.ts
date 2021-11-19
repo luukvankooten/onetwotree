@@ -8,9 +8,9 @@ export enum Rating {
   FOUR,
   FIVE,
 }
-
 export interface Rate {
   rating: Rating;
   track: Track;
   user: User;
+  created: Date;
 }
