@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About from "./routes/About";
+import RateTrack from "./routes/RateTrack";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="about" element={<About />} />
+          <Route path="rate-track" element={<RateTrack />} />
         </Routes>
       </BrowserRouter>
     </Provider>
