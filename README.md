@@ -2,6 +2,9 @@
 
 This project is a school project. Its goal to rate music and leave commands on particular part of the track.
 
+[github](https://github.com/luukvankooten/onetwotree)
+[url](https://lvk-2173630-12tree.herokuapp.com/)
+
 ## Architecture
 
 ```

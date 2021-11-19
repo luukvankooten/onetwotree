@@ -1,6 +1,7 @@
 import User from "./user";
 
-export interface Comment {
+export default interface Comment {
   user: User;
   comment: string;
+  created: number;
 }

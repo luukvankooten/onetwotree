@@ -1,9 +1,11 @@
 name: Deploy
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types:
+      - completed
 
 jobs:
   build:
@@ -13,7 +15,7 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: " lvk-2173630-12tree"
+          heroku_app_name: "lvk-2173630-12tree"
           heroku_email: "lvankooten@student.avans.nl"
           usedocker: true
           docker_build_args: |
