@@ -1,29 +1,22 @@
-name: CI/CD
+name: Deploy
 
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    env:
-      CI: true
-
     steps:
       - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
-          ref: ${{ github.head_ref }}
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "17.x"
-      - name: Install dependencies
-        run: npm ci
-      - run: npx prettier --fix .
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply formatting changes
-          branch: ${{ github.head_ref }}
-      - run: npm run build --if-present
-      - run: npm test -ws --if-present
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: " lvk-2173630-12tree"
+          heroku_email: "lvankooten@student.avans.nl"
+          usedocker: true
+          docker_build_args: |
+            NODE_ENV
+        env:
+          NODE_ENV: production
