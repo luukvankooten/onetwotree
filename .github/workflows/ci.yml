@@ -1,0 +1,23 @@
+name: CI/CD
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      CI: true
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "17.x"
+      - name: Install dependencies
+        run: npm ci
+      - run: npm run build --if-present
+      - run: npm test -ws --if-present
