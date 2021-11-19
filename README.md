@@ -26,7 +26,7 @@ Build all to the build directory
 build/
 	app/
 	domain/
-	server/ 
+	server/
 ```
 
 ## Environment variables
@@ -35,7 +35,7 @@ build/
 
 [see](https://www.npmjs.com/package/dotenv)
 
-Mostly used to set the DOTENV_CONFIG_PATH to use the root. 
+Mostly used to set the DOTENV_CONFIG_PATH to use the root.
 
 ### BUILD_PATH
 
