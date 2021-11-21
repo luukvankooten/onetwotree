@@ -2,23 +2,24 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { store } from "./app/store";
+import { store, history } from "./app/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { HistoryRouter as Router } from "redux-first-history/rr6";
 import About from "./routes/About";
 import RateTrack from "./routes/RateTrack";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <Router history={history}>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="about" element={<About />} />
           <Route path="rate-track" element={<RateTrack />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
