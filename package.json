@@ -39,8 +39,5 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
-  },
-  "dependencies": {
-    "redux-first-history": "^5.0.3"
   }
 }
