@@ -7,19 +7,11 @@ import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { Routes, Route } from "react-router-dom";
 import { HistoryRouter as Router } from "redux-first-history/rr6";
-import About from "./routes/About";
-import RateTrack from "./routes/RateTrack";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router history={history}>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="about" element={<About />} />
-          <Route path="rate-track" element={<RateTrack />} />
-        </Routes>
-      </Router>
+      <App history={history} />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

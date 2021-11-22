@@ -4,7 +4,6 @@ import Nav from "../components/Nav";
 function About() {
   return (
     <React.Fragment>
-      <Nav />
       <div className="flex flex-col max-w-5xl mx-auto">
         <h1 className="text-xl font-semibold mb-2">About</h1>
 
