@@ -2,7 +2,10 @@ import { User } from "@12tree/domain";
 import express from "express";
 import passport from "passport";
 import { Profile, Strategy as SpotifyStrategy } from "passport-spotify";
-import { Strategy as BearerStrategy } from "passport-http-bearer";
+import {
+  Strategy as BearerStrategy,
+  VerifyFunctionWithRequest,
+} from "passport-http-bearer";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -48,8 +51,6 @@ passport.use(
   new BearerStrategy(function (token, done) {
     let user: User | undefined = users.find((user) => user.token === token);
 
-    console.log(user);
-
     if (!user) {
       return done(null, false);
     }
@@ -77,7 +78,10 @@ app.get(
 
 app.get(
   "/api/users/me",
-  passport.authenticate("bearer", { session: false }),
+  passport.authenticate("bearer", {
+    session: false,
+    failureRedirect: "/auth/spotify",
+  }),
   function (req, res) {
     res.send("/api/user/me");
   }
