@@ -10,18 +10,21 @@ const user1: User = {
   username: "Luuk",
   email: "l.vankooten@student.avans.nl",
   name: "Luuk van Kooten",
+  token: "",
 };
 
 const user2: User = {
   username: "Pascal",
   email: "p.stoop@student.avans.nl",
   name: "Pascal Stoop",
+  token: "",
 };
 
 const user3: User = {
   username: "Ali",
   email: "a.bikini@student.avans.nl",
   name: "Ali Bikini",
+  token: "",
 };
 
 const initialState: commentState = {

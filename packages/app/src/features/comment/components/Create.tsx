@@ -19,6 +19,7 @@ export default function Create() {
           name: "dummy dummy",
           email: "dummy@dummy.com",
           username: "dummy",
+          token: "",
         },
       })
     )
