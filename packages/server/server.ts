@@ -10,8 +10,6 @@ import cors from "cors";
 const app = express();
 const port = process.env.PORT || 3000;
 
-console.log(port);
-
 const users: User[] = [
   {
     username: "luuk171",
