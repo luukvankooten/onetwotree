@@ -4,9 +4,13 @@ import passport from "passport";
 import { Profile, Strategy as SpotifyStrategy } from "passport-spotify";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import jwt from "jsonwebtoken";
+import path from "path";
+import cors from "cors";
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+console.log(port);
 
 const users: User[] = [
   {
@@ -17,6 +21,8 @@ const users: User[] = [
     name: "luuk171",
   },
 ];
+
+app.use(cors());
 
 function createUser(profile: Profile, token: string): User {
   let user: User = {
@@ -64,13 +70,13 @@ passport.use(
       const token = jwt_payload.token;
 
       if (!token) {
-        return done(false, null);
+        return done(false, null, { message: "no token provided" });
       }
 
       const user: User | undefined = users.find((user) => user.token === token);
 
       if (!user) {
-        return done(false, null);
+        return done(false, null, { message: "unauthenicated user" });
       }
 
       return done(null, user);
@@ -81,7 +87,7 @@ passport.use(
 app.get(
   "/auth/spotify/callback",
   passport.authenticate("spotify", {
-    failureRedirect: "/auth/spotify",
+    failureRedirect: process.env.REDIRECT_URL,
     session: false,
   }),
   function (req, res) {
@@ -103,14 +109,15 @@ app.get(
   passport.authenticate("jwt", {
     session: false,
   }),
-  function (req, res) {
+  function (req, res, next) {
     res.json(req.user);
   }
 );
 
-app.get("/*", (req, res) => {
-  res.send("Hello World!");
-});
+app.use(
+  "/*",
+  express.static(path.join(__dirname, process.env.SERVE_FILE || "public"))
+);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
