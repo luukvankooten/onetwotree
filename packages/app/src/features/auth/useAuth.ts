@@ -1,16 +1,12 @@
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { push } from "redux-first-history";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getLoad, getState, Status, fetchUser } from "./authSlice";
-
-export const foo = "foo";
+import { fetchUser, getState, Status } from "./authSlice";
 
 export default function useAuth(): Status {
-  const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
+  const [cookies, _setCookie, _removeCookie] = useCookies(["jwt"]);
   const dispatch = useAppDispatch();
   const status = useAppSelector(getState);
-  const load = useAppSelector(getLoad);
 
   useEffect(() => {
     const jwt = cookies.jwt ?? "";

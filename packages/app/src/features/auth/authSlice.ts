@@ -1,11 +1,6 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-  Slice,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User } from "@12tree/domain";
-import { RootState, AppThunk } from "../../app/store";
+import { RootState } from "../../app/store";
 import { fetchUser as fetchUserApi } from "./authApi";
 
 export enum Status {
@@ -24,7 +19,6 @@ type AuthorizedState = {
   status: Status.AUTHENICATED;
   user: User;
 };
-
 type LoadingState = {
   status: Status.LOADING;
 };
@@ -78,8 +72,8 @@ export const authSlice = createSlice({
       .addCase(fetchUser.fulfilled, (state, action) => {
         const [status, payload] = action.payload;
 
-        let load: AuthorizedState | UnauthorizedState =
-          status == 200
+        const load: AuthorizedState | UnauthorizedState =
+          status === 200
             ? {
                 status: Status.AUTHENICATED,
                 user: payload as User,

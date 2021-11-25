@@ -1,17 +1,7 @@
-import React, { ReactNode, useEffect } from "react";
-import { useCookies } from "react-cookie";
-import Login from "../../routes/Login";
-import {
-  getState,
-  isAuthenicated,
-  fetchUser,
-  getLoad,
-  Status,
-} from "./authSlice";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { Status } from "./authSlice";
 import useAuth from "./useAuth";
-import { Outlet, Navigate, useLocation } from "react-router-dom";
-import { push } from "redux-first-history";
 
 type AuthProps = {
   children: JSX.Element;
@@ -19,7 +9,6 @@ type AuthProps = {
 
 export default function Auth({ children }: AuthProps) {
   const status = useAuth();
-  // const location = useLocation();
 
   if (status === Status.UNAUTHORIZEDSTATE) {
     return <Navigate to="/login" />;

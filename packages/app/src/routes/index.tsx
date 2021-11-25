@@ -1,12 +1,11 @@
-import Nav from "../components/Nav";
-import { BrowserRouter, Routes as ReactRouter, Route } from "react-router-dom";
-import About from "./About";
-import RateTrack from "./RateTrack";
-import Home from "./Home";
 import React from "react";
-import Login from "./Login";
-import Auth from "../features/auth/Auth";
+import { BrowserRouter, Route, Routes as ReactRouter } from "react-router-dom";
 import Layout from "../components/Layout";
+import Auth from "../features/auth/Auth";
+import About from "./About";
+import Home from "./Home";
+import Login from "./Login";
+import RateTrack from "./RateTrack";
 
 export default function Routes() {
   return (

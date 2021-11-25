@@ -1,5 +1,4 @@
 import React from "react";
-import Nav from "../components/Nav";
 
 function About() {
   return (
@@ -63,7 +62,7 @@ function About() {
           </p>
         </div>
 
-        <img src="/entities.png" />
+        <img alt="domain objects" src="/entities.png" />
       </div>
     </React.Fragment>
   );
