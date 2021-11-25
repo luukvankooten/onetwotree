@@ -1,19 +1,33 @@
 import Nav from "../components/Nav";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes as ReactRouter, Route } from "react-router-dom";
 import About from "./About";
 import RateTrack from "./RateTrack";
 import Home from "./Home";
 import React from "react";
+import Login from "./Login";
+import Auth from "../features/auth/Auth";
+import Layout from "../components/Layout";
 
-const routes = (
-  <React.Fragment>
-    <Nav />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="about" element={<About />} />
-      <Route path="rate-track" element={<RateTrack />} />
-    </Routes>
-  </React.Fragment>
-);
-
-export default routes;
+export default function Routes() {
+  return (
+    <React.Fragment>
+      <BrowserRouter>
+        <ReactRouter>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <Auth>
+                <Layout />
+              </Auth>
+            }
+          >
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="rate-track" element={<RateTrack />} />
+          </Route>
+        </ReactRouter>
+      </BrowserRouter>
+    </React.Fragment>
+  );
+}
