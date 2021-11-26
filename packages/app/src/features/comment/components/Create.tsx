@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
-import { Comment } from "@12tree/domain";
-import { add } from "../commentSlice";
 import { useAppDispatch } from "../../../app/hooks";
+import { add } from "../commentSlice";
 
 type FormData = {
   comment: string;
@@ -19,6 +18,7 @@ export default function Create() {
           name: "dummy dummy",
           email: "dummy@dummy.com",
           username: "dummy",
+          token: "",
         },
       })
     )

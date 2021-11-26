@@ -13,10 +13,18 @@
   "author": "Luuk van Kooten",
   "license": "ISC",
   "dependencies": {
-    "@12tree/domain": "^1.0.0",
-    "express": "^4.17.1"
+    "@12tree/domain": "file:../domain",
+    "express": "^4.17.1",
+    "passport": "^0.5.0",
+    "passport-jwt": "^4.0.0",
+    "passport-spotify": "^2.0.0",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
-    "@types/express": "^4.17.13"
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/passport": "^1.0.7",
+    "@types/passport-spotify": "^2.0.1",
+    "@types/passport-jwt": "^3.0.6"
   }
 }

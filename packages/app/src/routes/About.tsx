@@ -1,10 +1,8 @@
 import React from "react";
-import Nav from "../components/Nav";
 
 function About() {
   return (
     <React.Fragment>
-      <Nav />
       <div className="flex flex-col max-w-5xl mx-auto">
         <h1 className="text-xl font-semibold mb-2">About</h1>
 
@@ -64,7 +62,7 @@ function About() {
           </p>
         </div>
 
-        <img src="/entities.png" />
+        <img alt="domain objects" src="/entities.png" />
       </div>
     </React.Fragment>
   );

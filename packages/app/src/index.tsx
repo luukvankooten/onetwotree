@@ -1,24 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import { Provider } from "react-redux";
 import App from "./App";
 import { store } from "./app/store";
-import { Provider } from "react-redux";
+import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import About from "./routes/About";
-import RateTrack from "./routes/RateTrack";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="about" element={<About />} />
-          <Route path="rate-track" element={<RateTrack />} />
-        </Routes>
-      </BrowserRouter>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
