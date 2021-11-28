@@ -6,9 +6,14 @@ import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import jwt from "jsonwebtoken";
 import path from "path";
 import cors from "cors";
+import { hostname } from "os";
 
 const app = express();
 const port = process.env.PORT || 3000;
+const serve_path = process.env.SERVE_PATH || "public";
+const redirect_url = process.env.REDIRECT_URL || "/";
+
+console.log(redirect_url);
 
 const users: User[] = [
   {
@@ -85,12 +90,13 @@ passport.use(
 app.get(
   "/auth/spotify/callback",
   passport.authenticate("spotify", {
-    failureRedirect: process.env.REDIRECT_URL,
+    failureRedirect: redirect_url,
     session: false,
   }),
   function (req, res) {
-    const url = process.env.REDIRECT_URL || "/";
-    res.cookie("jwt", jwt.sign(req.user ?? {}, "secret")).redirect(url);
+    res
+      .cookie("jwt", jwt.sign(req.user ?? {}, "secret"))
+      .redirect(redirect_url);
   }
 );
 
@@ -112,10 +118,11 @@ app.get(
   }
 );
 
-app.use(
-  "/*",
-  express.static(path.join(__dirname, process.env.SERVE_FILE || "public"))
-);
+app.use(express.static(path.join(__dirname, serve_path)));
+
+app.all("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, serve_path, "index.html"));
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
