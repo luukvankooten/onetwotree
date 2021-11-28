@@ -11,7 +11,7 @@ import { hostname } from "os";
 const app = express();
 const port = process.env.PORT || 3000;
 const serve_path = process.env.SERVE_PATH || "public";
-const redirect_url = process.env.REDIRECT_URL || `${hostname()}:${port}`;
+const redirect_url = process.env.REDIRECT_URL || "/";
 
 console.log(redirect_url);
 
@@ -90,12 +90,13 @@ passport.use(
 app.get(
   "/auth/spotify/callback",
   passport.authenticate("spotify", {
-    failureRedirect: process.env.REDIRECT_URL,
+    failureRedirect: redirect_url,
     session: false,
   }),
   function (req, res) {
-    const url = process.env.REDIRECT_URL || "/";
-    res.cookie("jwt", jwt.sign(req.user ?? {}, "secret")).redirect(url);
+    res
+      .cookie("jwt", jwt.sign(req.user ?? {}, "secret"))
+      .redirect(redirect_url);
   }
 );
 
