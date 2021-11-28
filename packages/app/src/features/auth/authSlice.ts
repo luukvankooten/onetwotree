@@ -87,7 +87,7 @@ export const authSlice = createSlice({
       .addCase(fetchUser.rejected, (state, action) => {
         const load: ErrorState = {
           status: Status.ERROR,
-          error: action.error.message ?? "",
+          error: action.error?.message ?? "",
         };
 
         state.load = load;

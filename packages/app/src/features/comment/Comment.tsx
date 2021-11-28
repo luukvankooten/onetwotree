@@ -9,8 +9,8 @@ export default function Comment() {
   return (
     <div>
       <Create />
-      {comments.map((comment, index) => (
-        <Show key={index.toString()} index={index} comment={comment} />
+      {comments.map((_comment, index) => (
+        <Show key={index.toString()} index={index} />
       ))}
     </div>
   );
