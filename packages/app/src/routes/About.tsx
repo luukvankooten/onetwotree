@@ -63,6 +63,7 @@ function About() {
         </div>
 
         <img alt="domain objects" src="/entities.png" />
+        <img alt="domain objects" src="/cicd.png" />
       </div>
     </React.Fragment>
   );
