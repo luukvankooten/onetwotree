@@ -86,5 +86,7 @@ export const commentSlice = createSlice({
 export const { add, edit, remove } = commentSlice.actions;
 
 export const selectComments = (state: RootState) => state.comment.comments;
+export const selectComment = (index: number) => (state: RootState) =>
+  state.comment.comments[index];
 
 export default commentSlice.reducer;
