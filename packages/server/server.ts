@@ -12,6 +12,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const serve_path = process.env.SERVE_PATH || "public";
 const redirect_url = process.env.REDIRECT_URL || "/";
+const host = process.env.HOST || "http://localhost";
 
 console.log(redirect_url);
 
@@ -46,7 +47,7 @@ const spotify = new SpotifyStrategy(
   {
     clientID: "2ce0b37caf4b454587e2e62c517b17ea",
     clientSecret: "d20882d27526426d8143f85ba3ef96e8",
-    callbackURL: `http://localhost:${port}/auth/spotify/callback`,
+    callbackURL: `${host}/auth/spotify/callback`,
     scope: ["user-read-email", "user-read-private"],
   },
   function (accessToken, refreshToken, expires_in, profile, done) {
