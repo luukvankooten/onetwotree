@@ -6,9 +6,14 @@ import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import jwt from "jsonwebtoken";
 import path from "path";
 import cors from "cors";
+import { hostname } from "os";
 
 const app = express();
 const port = process.env.PORT || 3000;
+const serve_path = process.env.SERVE_PATH || "public";
+const redirect_url = process.env.REDIRECT_URL || `${hostname()}:${port}`;
+
+console.log(redirect_url);
 
 const users: User[] = [
   {
@@ -111,8 +116,6 @@ app.get(
     res.json(req.user);
   }
 );
-
-const serve_path = process.env.SERVE_PATH || "public";
 
 app.use(express.static(path.join(__dirname, serve_path)));
 
