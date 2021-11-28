@@ -95,8 +95,6 @@ export const authSlice = createSlice({
   },
 });
 
-authSlice.caseReducers;
-
 export const getLoad = (state: RootState) => state.auth.load;
 export const getState = (state: RootState) => state.auth.load.status;
 export const isAuthenicated = (state: RootState) =>
