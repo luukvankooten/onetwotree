@@ -87,13 +87,15 @@ export const authSlice = createSlice({
       .addCase(fetchUser.rejected, (state, action) => {
         const load: ErrorState = {
           status: Status.ERROR,
-          error: action.error.message ?? "",
+          error: action.error?.message ?? "",
         };
 
         state.load = load;
       });
   },
 });
+
+authSlice.caseReducers;
 
 export const getLoad = (state: RootState) => state.auth.load;
 export const getState = (state: RootState) => state.auth.load.status;
