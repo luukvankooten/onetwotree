@@ -112,10 +112,13 @@ app.get(
   }
 );
 
-app.use(
-  "/*",
-  express.static(path.join(__dirname, process.env.SERVE_FILE || "public"))
-);
+const serve_path = process.env.SERVE_PATH || "public";
+
+app.use(express.static(path.join(__dirname, serve_path)));
+
+app.all("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, serve_path, "index.html"));
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
