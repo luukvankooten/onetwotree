@@ -6,7 +6,7 @@
     "test": "jest",
     "pwd": "pwd",
     "build": "ncc build server.ts -m -o dist",
-    "start": "nodemon -r dotenv/config server.ts"
+    "start": "nodemon --watch ../validation --watch ../domain --watch ../infrastructure  --watch ./ -r dotenv/config server.ts  "
   },
   "keywords": [
     "server"
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@12tree/domain": "file:../domain",
+    "@12tree/infrastructure": "file:../infrastructure",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "passport": "^0.5.0",

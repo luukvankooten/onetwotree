@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import path from "path";
 import cors from "cors";
 import { hostname } from "os";
+import { CommentControllers } from "./src/v1";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -62,6 +63,7 @@ const spotify = new SpotifyStrategy(
 );
 
 passport.use(spotify);
+app.use(express.json());
 
 passport.use(
   new JwtStrategy(
@@ -109,14 +111,16 @@ app.get(
   })
 );
 
-app.get(
-  "/api/users/me",
+const apiV1 = express.Router();
+
+apiV1.use("/comments", CommentControllers);
+
+app.use(
+  "/api/v1",
   passport.authenticate("jwt", {
     session: false,
   }),
-  function (req, res, next) {
-    res.json(req.user);
-  }
+  apiV1
 );
 
 app.use(express.static(path.join(__dirname, serve_path)));
