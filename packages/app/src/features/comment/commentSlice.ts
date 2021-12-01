@@ -32,27 +32,27 @@ const initialState: commentState = {
     {
       user: user3,
       comment: "Super track",
-      created: Date.now(),
+      createdAt: Date.now(),
     },
     {
       user: user1,
       comment: "Leuk",
-      created: Date.now(),
+      createdAt: Date.now(),
     },
     {
       user: user1,
       comment: "Topp",
-      created: Date.now(),
+      createdAt: Date.now(),
     },
     {
       user: user2,
       comment: "Deze artiets is goed",
-      created: Date.now(),
+      createdAt: Date.now(),
     },
     {
       user: user2,
       comment: "Niet normaal",
-      created: Date.now(),
+      createdAt: Date.now(),
     },
   ],
 };

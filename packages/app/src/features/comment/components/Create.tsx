@@ -13,7 +13,7 @@ export default function Create() {
     dispatch(
       add({
         comment: data.comment,
-        created: Date.now(),
+        createdAt: Date.now(),
         user: {
           name: "dummy dummy",
           email: "dummy@dummy.com",
