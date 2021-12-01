@@ -17,7 +17,8 @@
   "workspaces": [
     "packages/app",
     "packages/server",
-    "packages/domain"
+    "packages/domain",
+    "packages/validation"
   ],
   "devDependencies": {
     "dotenv": "^10.0.0",
