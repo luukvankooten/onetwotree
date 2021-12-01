@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Validates the domain objects",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/luukvankooten/onetwotree/issues"
   },
-  "homepage": "https://github.com/luukvankooten/onetwotree#readme"
+  "homepage": "https://github.com/luukvankooten/onetwotree#readme",
+  "dependencies": {
+    "yup": "^0.32.11"
+  }
 }
