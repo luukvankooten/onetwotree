@@ -18,7 +18,8 @@
     "packages/app",
     "packages/server",
     "packages/domain",
-    "packages/validation"
+    "packages/validation",
+    "packages/infrastructure"
   ],
   "devDependencies": {
     "dotenv": "^10.0.0",
