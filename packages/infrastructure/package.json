@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/luukvankooten/onetwotree#readme",
   "dependencies": {
-    "mongoose": "^6.0.14"
+    "mongoose": "^6.0.14",
+    "neo4j-node-ogm": "^1.1.14"
   }
 }
