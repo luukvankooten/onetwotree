@@ -14,6 +14,7 @@ import { add, selectComment } from "../commentSlice";
 describe("comment test", () => {
   it("should toggle edit mode and save", async () => {
     const comment: Comment = {
+      id: "",
       user: {
         username: "foo",
         email: "foo@foo.com",
@@ -21,7 +22,7 @@ describe("comment test", () => {
         name: "foo baz",
       },
       comment: "foo baz bar",
-      created: Date.now(),
+      createdAt: Date.now(),
     };
 
     store.dispatch(add(comment));
