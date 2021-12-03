@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 export interface commentState {
-  comments: Comment[];
+  comments: Omit<Comment, "id">[];
 }
 
 const user1: User = {
@@ -67,7 +67,7 @@ export const commentSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    add: (state, action: PayloadAction<Comment>) => {
+    add: (state, action: PayloadAction<Omit<Comment, "id">>) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
