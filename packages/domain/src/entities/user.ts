@@ -3,4 +3,5 @@ export default interface User {
   email: string;
   username: string;
   token: string;
+  friends: User[];
 }
