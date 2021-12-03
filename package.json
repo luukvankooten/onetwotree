@@ -30,7 +30,9 @@
     "typescript": "^4.4.4"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start:server": "DOTENV_CONFIG_PATH=$(pwd)/.env npm run -w @12tree/server start",
+    "start:app": "DOTENV_CONFIG_PATH=$(pwd)/.env npm run -w @12tree/app start"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
