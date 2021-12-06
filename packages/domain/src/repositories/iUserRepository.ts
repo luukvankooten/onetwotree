@@ -5,4 +5,5 @@ export default interface IUserReposistory {
   getByToken(token: string): Promise<User | undefined>;
   get(id: string): Promise<User | undefined>;
   getByRefreshToken(token: string): Promise<User | undefined>;
+  getByEmail(email: string): Promise<User | undefined>;
 }

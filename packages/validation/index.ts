@@ -3,4 +3,5 @@ export {
   validateRegisterUser,
   default as validateUser,
   validateToken,
+  validateLoginUser,
 } from "./src/user";

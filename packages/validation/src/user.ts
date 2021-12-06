@@ -1,11 +1,16 @@
 import * as yup from "yup";
 import helper from "./helper";
 
+const name = yup.string().required();
+const username = yup.string().required();
+const email = yup.string().email().required();
+const password = yup.string().required();
+
 const user = {
   id: yup.string().uuid().required(),
-  name: yup.string().required(),
-  username: yup.string().required(),
-  email: yup.string().email().required(),
+  name,
+  username,
+  email,
 };
 
 const validator = yup
@@ -23,15 +28,26 @@ const validator = yup
 
 export const newUserValidatorObject = yup
   .object({
-    name: yup.string().required(),
-    username: yup.string().required().min(5).max(255),
-    email: yup.string().email().required(),
-    password: yup.string().required().min(8).max(255),
+    name,
+    username: username.min(5).max(255),
+    email,
+    password: password.min(8).max(255),
+  })
+  .required();
+
+export const loginUserValidatorObject = yup
+  .object({
+    email,
+    password,
   })
   .required();
 
 export async function validateRegisterUser(value: any) {
   return helper(newUserValidatorObject, value);
+}
+
+export async function validateLoginUser(value: any) {
+  return helper(loginUserValidatorObject, value);
 }
 
 export async function validateToken(value: any) {

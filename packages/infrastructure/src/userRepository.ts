@@ -22,8 +22,8 @@ const userModel = instance.model<UserNeo4j>("User", {
     primary: true,
   },
   name: "string",
-  email: "string",
-  username: "string",
+  email: { type: "string", unique: true },
+  username: { type: "string", unique: true },
   token_accessToken: "string",
   token_refreshToken: "string",
   token_expiresIn: "number",
@@ -93,6 +93,10 @@ async function create({
   return mapPropsToUser(user.properties());
 }
 
+async function getByEmail(email: string) {
+  return await findBy("u.email", email);
+}
+
 async function getByToken(token: string) {
   return await findBy("u.token_accessToken", token);
 }
@@ -116,6 +120,7 @@ const userRepository: IUserReposistory = {
   getByToken,
   get,
   getByRefreshToken,
+  getByEmail,
 };
 
 export default userRepository;
