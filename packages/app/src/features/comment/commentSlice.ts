@@ -3,58 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 export interface commentState {
-  comments: Omit<Comment, "id">[];
+  comments: Comment[];
 }
 
-const user1: User = {
-  username: "Luuk",
-  email: "l.vankooten@student.avans.nl",
-  name: "Luuk van Kooten",
-  token: "",
-};
-
-const user2: User = {
-  username: "Pascal",
-  email: "p.stoop@student.avans.nl",
-  name: "Pascal Stoop",
-  token: "",
-};
-
-const user3: User = {
-  username: "Ali",
-  email: "a.bikini@student.avans.nl",
-  name: "Ali Bikini",
-  token: "",
-};
-
 const initialState: commentState = {
-  comments: [
-    {
-      user: user3,
-      comment: "Super track",
-      createdAt: Date.now(),
-    },
-    {
-      user: user1,
-      comment: "Leuk",
-      createdAt: Date.now(),
-    },
-    {
-      user: user1,
-      comment: "Topp",
-      createdAt: Date.now(),
-    },
-    {
-      user: user2,
-      comment: "Deze artiets is goed",
-      createdAt: Date.now(),
-    },
-    {
-      user: user2,
-      comment: "Niet normaal",
-      createdAt: Date.now(),
-    },
-  ],
+  comments: [],
 };
 
 type UpdateComment = {
@@ -67,7 +20,7 @@ export const commentSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    add: (state, action: PayloadAction<Omit<Comment, "id">>) => {
+    add: (state, action: PayloadAction<Comment>) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
