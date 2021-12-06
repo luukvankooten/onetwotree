@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User } from "@12tree/domain";
 import { RootState } from "../../app/store";
-import { fetchUser as fetchUserApi } from "./authApi";
+import { fetchByCredentials, fetchByToken } from "./authApi";
+import { Cookies } from "react-cookie";
 
 export enum Status {
   IDLE,
@@ -49,14 +50,21 @@ const initialState: AuthState = {
   },
 };
 
-export const fetchUser = createAsyncThunk(
-  "auth/fetchUser",
-  async (token: string) => {
-    const response = await fetchUserApi(
-      "QCpzkApjYqrWsp7sow8MXnllR8PyKseUV1vDw0uDJnW5OqQajHAtKdGyNty_L0qczkcHz87FjbV0XFMCHE7aXNuXSnkx9AnnEv6dG6mDir5eLClLNkexFosJRfOgvj9jlgr7Pg2if_umrPktOL4114g6tyAMg"
-    );
+export type AuthMethod =
+  | { method: "credentials"; password: string; email: string }
+  | { method: "token"; token: string };
 
-    return response;
+export const fetchAuth = createAsyncThunk(
+  "auth/authenicate",
+  async (auth: AuthMethod) => {
+    if (auth.method === "credentials") {
+      return await fetchByCredentials({
+        password: auth.password,
+        email: auth.email,
+      });
+    }
+
+    return await fetchByToken(auth.token);
   }
 );
 
@@ -66,10 +74,10 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchUser.pending, (state, action) => {
+      .addCase(fetchAuth.pending, (state, action) => {
         state.load.status = Status.LOADING;
       })
-      .addCase(fetchUser.fulfilled, (state, action) => {
+      .addCase(fetchAuth.fulfilled, (state, action) => {
         const [status, payload] = action.payload;
 
         const load: AuthorizedState | UnauthorizedState =
@@ -84,7 +92,7 @@ export const authSlice = createSlice({
 
         state.load = load;
       })
-      .addCase(fetchUser.rejected, (state, action) => {
+      .addCase(fetchAuth.rejected, (state, action) => {
         const load: ErrorState = {
           status: Status.ERROR,
           error: action.error?.message ?? "",
@@ -96,7 +104,7 @@ export const authSlice = createSlice({
 });
 
 export const getLoad = (state: RootState) => state.auth.load;
-export const getState = (state: RootState) => state.auth.load.status;
+export const getStatus = (state: RootState) => state.auth.load.status;
 export const isAuthenicated = (state: RootState) =>
   state.auth.load.status === Status.AUTHENICATED;
 

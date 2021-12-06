@@ -1,0 +1,19 @@
+{
+  "name": "@12tree/validation",
+  "version": "1.0.0",
+  "description": "Validates the domain objects",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luukvankooten/onetwotree.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luukvankooten/onetwotree/issues"
+  },
+  "homepage": "https://github.com/luukvankooten/onetwotree#readme",
+  "dependencies": {
+    "yup": "^0.32.11"
+  }
+}

@@ -14,7 +14,7 @@ describe("comment slice", () => {
         name: "foo baz",
       },
       comment: "foo baz bar",
-      created: Date.now(),
+      createdAt: Date.now(),
     };
     expect(commentSlice(initialState, add(comment)).comments).toContainEqual(
       comment
@@ -32,7 +32,7 @@ describe("comment slice", () => {
             name: "foo baz",
           },
           comment: "Should be edited",
-          created: Date.now(),
+          createdAt: Date.now(),
         },
       ],
     };
@@ -57,7 +57,7 @@ describe("comment slice", () => {
         name: "foo baz",
       },
       comment: "This comment should not be removed",
-      created: Date.now(),
+      createdAt: Date.now(),
     };
 
     const initialState: commentState = {
@@ -70,7 +70,7 @@ describe("comment slice", () => {
             name: "foo baz",
           },
           comment: "Should be removed",
-          created: Date.now(),
+          createdAt: Date.now(),
         },
         shouldNotBeRemoved,
       ],
