@@ -16,17 +16,24 @@
   "dependencies": {
     "@12tree/domain": "file:../domain",
     "@12tree/infrastructure": "file:../infrastructure",
+    "@12tree/validation": "file:../validation",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "node-fetch": "^2.6.6",
     "passport": "^0.5.0",
     "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "passport-oauth2-refresh": "^2.1.0",
     "passport-spotify": "^2.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/node": "^16.11.11",
     "@types/passport": "^1.0.7",
     "@types/passport-jwt": "^3.0.6",
+    "@types/passport-local": "^1.0.34",
+    "@types/passport-oauth2-refresh": "^1.1.1",
     "@types/passport-spotify": "^2.0.1",
     "@vercel/ncc": "^0.32.0",
     "nodemon": "^2.0.15"
