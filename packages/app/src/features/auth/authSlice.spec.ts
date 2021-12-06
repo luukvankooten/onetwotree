@@ -1,18 +1,25 @@
 import { User } from "@12tree/domain";
-import authSlice, { AuthState, fetchUser, Status } from "./authSlice";
+import authSlice, { AuthState, fetchAuth, Status } from "./authSlice";
 import { AnyAction } from "@reduxjs/toolkit";
 
 describe("auth reducer", () => {
   it("should return  handle HTTP 200 status if promise is fulfilled", () => {
     const fakeUser: User = {
+      id: "",
       username: "foo",
       email: "foo@foo.com",
-      token: "",
+      token: {
+        refreshToken: "",
+        accessToken: "",
+        expiresIn: 0,
+        createdAt: 0,
+      },
       name: "foo baz",
+      friends: [],
     };
 
     const action = {
-      type: fetchUser.fulfilled.type,
+      type: fetchAuth.fulfilled.type,
       payload: [200, fakeUser],
     };
 
@@ -23,7 +30,7 @@ describe("auth reducer", () => {
 
   it("should return unaurhized status on HTTP 402 status if promise is fulfilled", () => {
     const action = {
-      type: fetchUser.fulfilled.type,
+      type: fetchAuth.fulfilled.type,
       payload: [401, "Unauthenicated"],
     };
 
@@ -34,7 +41,7 @@ describe("auth reducer", () => {
 
   it("should return error status if promise is rejected", () => {
     const action = {
-      type: fetchUser.rejected.type,
+      type: fetchAuth.rejected.type,
       payload: "",
     };
 
@@ -45,7 +52,7 @@ describe("auth reducer", () => {
 
   it("should return load status if promise is pending", () => {
     const action = {
-      type: fetchUser.pending.type,
+      type: fetchAuth.pending.type,
     };
 
     expect(authSlice(undefined, action)).toEqual({

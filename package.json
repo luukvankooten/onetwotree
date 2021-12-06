@@ -32,10 +32,13 @@
   "scripts": {
     "prepare": "husky install",
     "test:all": "npm -ws --if-present test -- --watchAll=false --ci",
-    "start:server": "DOTENV_CONFIG_PATH=$(pwd)/.env npm run -w @12tree/server start",
-    "start:app": "DOTENV_CONFIG_PATH=$(pwd)/.env npm run -w @12tree/app start"
+    "start:server": "cross-env DOTENV_CONFIG_PATH=$(pwd)/.env npm run -w @12tree/server start",
+    "start:app": "npm run -w @12tree/app start"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
   }
 }
