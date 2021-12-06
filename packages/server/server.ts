@@ -2,7 +2,11 @@ import express from "express";
 import passport from "passport";
 import path from "path";
 import cors from "cors";
-import { commentControllers, userControllers } from "./src/v1";
+import {
+  commentControllers,
+  trackControllers,
+  userControllers,
+} from "./src/v1";
 import authController from "./src/auth";
 
 const app = express();
@@ -21,6 +25,7 @@ app.use("/auth", authController);
 const apiV1 = express.Router();
 apiV1.use("/comments", commentControllers);
 apiV1.use("/users", userControllers);
+apiV1.use("/tracks", trackControllers);
 app.use(
   "/api/v1",
   passport.authenticate("jwt", {
