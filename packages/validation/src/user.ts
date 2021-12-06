@@ -13,15 +13,17 @@ const user = {
   email,
 };
 
-const validator = yup
+const validatorObject = yup
   .object({
     ...user,
-    token: yup.object({
-      accessToken: yup.string().required(),
-      refreshToken: yup.string().required(),
-      expiresIn: yup.number().required(),
-      createdAt: yup.number().required(),
-    }),
+    token: yup
+      .object({
+        accessToken: yup.string().required(),
+        refreshToken: yup.string().required(),
+        expiresIn: yup.number().required(),
+        createdAt: yup.number().required(),
+      })
+      .required(),
     friends: yup.array().of(yup.object(user)).default([]),
   })
   .required();
@@ -50,8 +52,8 @@ export async function validateLoginUser(value: any) {
   return helper(loginUserValidatorObject, value);
 }
 
-export async function validateToken(value: any) {
+export function validateToken(value: any) {
   return helper(yup.object(user).required(), value);
 }
 
-export default (value: any) => helper(validator, value);
+export default (value: any) => helper(validatorObject, value);

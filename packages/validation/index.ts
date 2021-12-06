@@ -4,4 +4,5 @@ export {
   default as validateUser,
   validateToken,
   validateLoginUser,
+  loginUserValidatorObject,
 } from "./src/user";
