@@ -6,10 +6,11 @@ services:
     restart: always
     ports:
       - 27017:${MONGO_PORT}
-
   neo4j:
-    image: neo4j
-    restart: true
+    image: neo4j/neo4j-arm64-experimental:4.4.0
+    restart: always
     ports:
       - 7474:7474
       - 7687:7687
+    env_file:
+      - .env
