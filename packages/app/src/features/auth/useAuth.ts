@@ -19,7 +19,6 @@ export default function useAuth(): [Status, (auth: AuthMethod) => void] {
   );
 
   useEffect(() => {
-    console.log(cookies["jwt"], "hello world");
     if (load.status === Status.AUTHENICATED && !cookies["jwt"]) {
       setCookie("jwt", load.user.token.accessToken);
       console.log(cookies["jwt"]);
