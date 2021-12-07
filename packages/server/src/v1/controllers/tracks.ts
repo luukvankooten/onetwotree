@@ -1,3 +1,4 @@
+import { SearchTrack } from "@12tree/domain/src/entities/track";
 import express from "express";
 import { trackRepo } from "../..";
 
@@ -11,7 +12,11 @@ router.get("/search", async (req, res) => {
     return;
   }
 
-  res.json(await trackRepo.search(query));
+  try {
+    res.json(await trackRepo.search(query));
+  } catch (err) {
+    res.json([]);
+  }
 });
 
 export default router;
