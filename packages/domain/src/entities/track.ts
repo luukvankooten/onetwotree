@@ -8,6 +8,13 @@ export default interface Track {
   ratings: Rate[];
 }
 
+export interface SearchTrack {
+  id: string;
+  name: string;
+  cover: string | undefined;
+  artists: string[];
+}
+
 export function getOveralRateing(track: Track): number {
   const sum = track.ratings
     .map((rating) => rating.rating)
