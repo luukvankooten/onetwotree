@@ -4,10 +4,12 @@ import { loginUserValidatorObject } from "@12tree/validation";
 import { Link, Navigate } from "react-router-dom";
 import useAuth from "../features/auth/useAuth";
 import { Status } from "../features/auth/authSlice";
+import { useCookies } from "react-cookie";
 
 type LoginData = ReturnType<typeof loginUserValidatorObject.validateSync>;
 
 export default function Login() {
+  const [cookie] = useCookies(["jwt"]);
   const [status, authenticate] = useAuth();
 
   const {
@@ -18,6 +20,10 @@ export default function Login() {
   } = useForm<LoginData>({
     resolver: yupResolver(loginUserValidatorObject),
   });
+
+  if (cookie["jwt"]) {
+    authenticate({ method: "token", token: cookie["jwt"] });
+  }
 
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
