@@ -1,6 +1,5 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { searchTrack } from "../../features/search/searchSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { searchTrack } from "../searchSlice";
 import Bar from "./Bar";
 import Item from "./Item";
 
