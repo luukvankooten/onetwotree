@@ -1,21 +1,57 @@
 import { ITrackReposistory } from "@12tree/domain";
+import { SearchTrack } from "@12tree/domain/src/entities/track";
 import SpotifyWebApi from "spotify-web-api-node";
 
-const spotifyApi = new SpotifyWebApi();
+const spotifyApi = (async () => {
+  const api = new SpotifyWebApi({
+    clientId: process.env.SPOTIFY_CLIENT_ID,
+    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+    // redirectUri: process.env.SPOTIFY_CALLBACK
+  });
 
-spotifyApi.setAccessToken(process.env.SPOTIFY_ACCESS_TOKEN || "");
+  if (!api.getAccessToken()) {
+    const data = await api.clientCredentialsGrant();
+
+    api.setAccessToken(data.body["access_token"]);
+  }
+
+  return api;
+})();
+
+const searchedResults: SearchTrack[] = [];
+
+//Due: to rate limit cache
+setTimeout(() => {
+  searchedResults.length = 0;
+}, 30000);
 
 async function search(query: string) {
-  const tracks = await spotifyApi.searchTracks(`track:${query}`);
+  try {
+    const api = await spotifyApi;
 
-  return (
-    tracks.body.tracks?.items.slice(0, 10).map((item) => ({
-      id: item.id,
-      name: item.name,
-      artists: item.artists.map((artist) => artist.name),
-      cover: item.album.images.shift()?.url,
-    })) || []
-  );
+    const tracks = await api.searchTracks(`track:${query}`);
+
+    console.log("from api");
+
+    const searched =
+      tracks.body.tracks?.items.map((item) => ({
+        id: item.id,
+        name: item.name,
+        artists: item.artists.map((artist) => artist.name),
+        cover: item.album.images.shift()?.url,
+      })) || [];
+
+    searchedResults.push(...searched);
+  } catch (err) {
+    const filter = searchedResults.filter((item) => item.name.includes(query));
+
+    if (filter.length >= 1) {
+      console.log("chached");
+      return filter;
+    }
+  }
+
+  return searchedResults;
 }
 
 const trackRepository: ITrackReposistory = { search };
