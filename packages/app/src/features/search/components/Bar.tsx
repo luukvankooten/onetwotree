@@ -1,10 +1,29 @@
-export default function Bar() {
+import { useForm } from "react-hook-form";
+
+interface BarProps {
+  trigger: (data: string) => void;
+  onSubmit: (data: string) => void;
+}
+
+type BarForm = { query: string };
+
+export default function Bar({ trigger, onSubmit }: BarProps) {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<BarForm>();
+
+  const submit = handleSubmit((data) => onSubmit(data.query));
+
   return (
-    <form className="flex w-auto h-14">
+    <form className="flex w-auto h-14" onSubmit={submit}>
       <input
         className="flex-1 px-3 py-3 rounded-l bg-transparent text-lg"
+        {...register("query", { onChange: (ev) => trigger(ev.target.value) })}
         type="search"
         placeholder="Lekker nummertje"
+        autoComplete="off"
       />
       <button className="flex-shrink p-3 h-full" type="submit">
         <svg

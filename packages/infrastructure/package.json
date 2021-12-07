@@ -15,6 +15,10 @@
   "homepage": "https://github.com/luukvankooten/onetwotree#readme",
   "dependencies": {
     "mongoose": "^6.0.14",
-    "neode": "^0.4.7"
+    "neode": "^0.4.7",
+    "spotify-web-api-node": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/spotify-web-api-node": "^5.0.4"
   }
 }

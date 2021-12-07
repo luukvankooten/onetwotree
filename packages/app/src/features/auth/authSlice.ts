@@ -108,4 +108,12 @@ export const getStatus = (state: RootState) => state.auth.load.status;
 export const isAuthenicated = (state: RootState) =>
   state.auth.load.status === Status.AUTHENICATED;
 
+export const getAccessToken = (state: RootState) => {
+  if (state.auth.load.status === Status.AUTHENICATED) {
+    return state.auth.load.user.token.accessToken;
+  }
+
+  return undefined;
+};
+
 export default authSlice.reducer;

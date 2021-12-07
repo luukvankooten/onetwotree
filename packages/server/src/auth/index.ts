@@ -59,6 +59,12 @@ passport.use(
 
 const router = express.Router();
 
+router.get("/spotify/callback", (req, res) => {
+  console.log(req, res);
+
+  res.status(200).end();
+});
+
 router.post("/register", async (req, res) => {
   const [err, user] = await validateRegisterUser(req.body);
 
