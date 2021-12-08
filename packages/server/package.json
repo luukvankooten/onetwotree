@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "the backend of the onetwotree",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watchAll",
     "pwd": "pwd",
     "build": "ncc build server.ts -m -o dist",
-    "start": "nodemon --watch ../validation --watch ../domain --watch ../infrastructure  --watch ./ -r dotenv/config server.ts  "
+    "start": "nodemon --watch ../validation --watch ../domain --watch ../infrastructure  --watch ./ -r dotenv/config server.ts"
   },
   "keywords": [
     "server"
@@ -19,6 +19,7 @@
     "@12tree/validation": "file:../validation",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-async-handler": "^1.2.0",
     "node-fetch": "^2.6.6",
     "passport": "^0.5.0",
     "passport-jwt": "^4.0.0",
@@ -35,7 +36,12 @@
     "@types/passport-local": "^1.0.34",
     "@types/passport-oauth2-refresh": "^1.1.1",
     "@types/passport-spotify": "^2.0.1",
+    "@types/supertest": "^2.0.11",
     "@vercel/ncc": "^0.32.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6"
+  },
+  "jest": {
+    "preset": "ts-jest"
   }
 }

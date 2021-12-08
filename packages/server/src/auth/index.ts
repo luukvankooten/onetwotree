@@ -1,14 +1,12 @@
-import express, { Request } from "express";
+import express, { Request, Router } from "express";
 import {
   validateLoginUser,
   validateRegisterUser,
   validateToken,
 } from "@12tree/validation";
 import crypto from "crypto";
-import { userRepo } from "../index";
 import jwt from "jsonwebtoken";
-import { hash, Token, User, verify } from "@12tree/domain";
-import passport from "passport";
+import { hash, IUserReposistory, Token, verify } from "@12tree/domain";
 import {
   Strategy as JwtStrategy,
   ExtractJwt,
@@ -16,114 +14,128 @@ import {
   SecretOrKeyProvider,
 } from "passport-jwt";
 
-const secretOrKeyProvider: SecretOrKeyProvider = async (
-  req,
-  rawJwtToken,
-  done
-) => {
-  const [err, nonAuthenicatedUser] = await validateToken(
-    jwt.decode(rawJwtToken)
-  );
+interface jwtAuthenicationDependencies {
+  userRepo: IUserReposistory;
+}
 
-  if ((err && !nonAuthenicatedUser) || !nonAuthenicatedUser) {
-    return done(err, undefined);
-  }
+export function jwtAuthenication({
+  userRepo,
+}: jwtAuthenicationDependencies): JwtStrategy {
+  const secretOrKeyProvider: SecretOrKeyProvider = async (
+    req,
+    rawJwtToken,
+    done
+  ) => {
+    const [err, nonAuthenicatedUser] = await validateToken(
+      jwt.decode(rawJwtToken)
+    );
 
-  console.log(nonAuthenicatedUser);
+    if ((err && !nonAuthenicatedUser) || !nonAuthenicatedUser) {
+      return done(err, undefined);
+    }
 
-  const user = await userRepo.get(nonAuthenicatedUser.id);
+    const user = await userRepo.getWithToken(nonAuthenicatedUser.id);
 
-  done(false, user?.token.refreshToken);
-};
+    console.log(user);
 
-passport.use(
-  new JwtStrategy(
+    if (!user) {
+      return done(null, undefined);
+    }
+
+    req.user = user;
+
+    done(false, user.token.refreshToken);
+  };
+
+  return new JwtStrategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKeyProvider,
       passReqToCallback: true,
     },
     async (req: Request, payload: any, done: VerifiedCallback) => {
-      const user = await userRepo.get(payload.id);
-
-      if (!user) {
+      if (!req.user) {
         return done(false, null, { message: "User is ghost" });
       }
 
-      //TODO: use refresh token
-
-      return done(null, user);
+      return done(null, req.user);
     }
-  )
-);
+  );
+}
 
-const router = express.Router();
+interface AuthDependencies {
+  userRepo: IUserReposistory;
+}
 
-router.get("/spotify/callback", (req, res) => {
-  console.log(req, res);
+export default function ({ userRepo }: AuthDependencies): Router {
+  const router = express.Router();
 
-  res.status(200).end();
-});
+  router.get("/spotify/callback", (req, res) => {
+    console.log(req, res);
 
-router.post("/register", async (req, res) => {
-  const [err, user] = await validateRegisterUser(req.body);
+    res.status(200).end();
+  });
 
-  if ((err && !user) || !user) {
-    res.status(400).json(err);
-    return;
-  }
+  router.post("/register", async (req, res) => {
+    const [err, user] = await validateRegisterUser(req.body);
 
-  const refreshToken = await hash(user.password);
+    if ((err && !user) || !user) {
+      res.status(400).json(err);
+      return;
+    }
 
-  const newUser = {
-    id: crypto.randomUUID(),
-    name: user.name,
-    username: user.username,
-    email: user.email,
-  };
+    const refreshToken = await hash(user.password);
 
-  const token: Token = {
-    refreshToken: refreshToken,
-    accessToken: jwt.sign(newUser, refreshToken),
-    expiresIn: 3600,
-    createdAt: Date.now(),
-  };
+    const newUser = {
+      id: crypto.randomUUID(),
+      name: user.name,
+      username: user.username,
+      email: user.email,
+    };
 
-  const createdUser = await userRepo.create({ ...newUser, token: token });
+    const token: Token = {
+      refreshToken: refreshToken,
+      accessToken: jwt.sign(newUser, refreshToken),
+      expiresIn: 3600,
+      createdAt: Date.now(),
+    };
 
-  if (!createdUser) {
-    res.status(402).end();
-    return;
-  }
+    const createdUser = await userRepo.create({ ...newUser, token: token });
 
-  console.log(createdUser.id, newUser.id);
+    if (!createdUser) {
+      res.status(402).end();
+      return;
+    }
 
-  res.json(createdUser);
-});
+    console.log(createdUser.id, newUser.id);
 
-router.post("/login", async (req, res) => {
-  const [err, nonAuthenicatedUser] = await validateLoginUser(req.body);
+    res.json(createdUser);
+  });
 
-  if ((err && !nonAuthenicatedUser) || !nonAuthenicatedUser) {
-    res.status(400).json(err);
-    return;
-  }
+  router.post("/login", async (req, res) => {
+    const [err, nonAuthenicatedUser] = await validateLoginUser(req.body);
 
-  const persitentUser = await userRepo.getByEmail(nonAuthenicatedUser.email);
+    if ((err && !nonAuthenicatedUser) || !nonAuthenicatedUser) {
+      res.status(400).json(err);
+      return;
+    }
 
-  if (
-    persitentUser &&
-    (await verify(
-      nonAuthenicatedUser.password,
-      persitentUser.token.refreshToken
-    ))
-  ) {
-    res.json(persitentUser);
+    const persitentUser = await userRepo.getByEmail(nonAuthenicatedUser.email);
 
-    return;
-  }
+    if (
+      persitentUser &&
+      (await verify(
+        nonAuthenicatedUser.password,
+        persitentUser.token.refreshToken
+      ))
+    ) {
+      res.json(persitentUser);
 
-  res.status(401).end();
-});
+      return;
+    }
 
-export default router;
+    res.status(401).end();
+  });
+
+  return router;
+}

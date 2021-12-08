@@ -1,9 +1,11 @@
-import express, { Request, Response } from "express";
+import express, { Router } from "express";
 
-const users = express.Router();
+export default function (): Router {
+  const users = express.Router();
 
-users.get("/me", (req, res) => {
-  res.json(req.user);
-});
+  users.get("/me", (req, res) => {
+    res.json(req.user);
+  });
 
-export default users;
+  return users;
+}
