@@ -3,6 +3,7 @@ import {
   Track,
   SearchTrack,
   NotFoundError,
+  IUserReposistory,
 } from "@12tree/domain";
 import { mapPropsToTrack } from "./mappers";
 import SpotifyWebApi from "spotify-web-api-node";
@@ -17,7 +18,8 @@ setInterval(() => {
 
 export default function (
   { TrackModel }: Models,
-  SpotifyApiConnection: Promise<SpotifyWebApi>
+  SpotifyApiConnection: Promise<SpotifyWebApi>,
+  userRepo: IUserReposistory
 ): ITrackReposistory {
   async function search(query: string) {
     try {
@@ -59,7 +61,7 @@ export default function (
       return create(spotifyId);
     }
 
-    return mapPropsToTrack(findTrack);
+    return mapPropsToTrack(findTrack, userRepo);
   }
 
   async function get(id: string): Promise<Track> {
@@ -71,7 +73,7 @@ export default function (
       throw new NotFoundError("Not found");
     }
 
-    return mapPropsToTrack(findTrack);
+    return mapPropsToTrack(findTrack, userRepo);
   }
 
   async function create(id: string) {
@@ -93,7 +95,7 @@ export default function (
 
     const track = await newTrack.save();
 
-    return mapPropsToTrack(track);
+    return mapPropsToTrack(track, userRepo);
   }
 
   async function update(track: Track) {
@@ -112,7 +114,7 @@ export default function (
 
     await trackFound.save();
 
-    return await mapPropsToTrack(trackFound);
+    return await mapPropsToTrack(trackFound, userRepo);
   }
 
   async function remove(id: string) {
@@ -122,7 +124,7 @@ export default function (
       throw new NotFoundError(`Track not found with id: ${id}`);
     }
 
-    return mapPropsToTrack(track);
+    return mapPropsToTrack(track, userRepo);
   }
 
   return { search, get, update, delete: remove, create, findBySpotifyId };

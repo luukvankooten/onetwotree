@@ -19,7 +19,7 @@ export default function (
   const userRepo = createUserRepository(models);
   const commentRepo = createCommentRepository(models, userRepo);
   const rateRepo = createRateRepository(models, userRepo);
-  const trackRepo = createTrackRepository(models, spotifyApi);
+  const trackRepo = createTrackRepository(models, spotifyApi, userRepo);
 
   return {
     userRepo,
