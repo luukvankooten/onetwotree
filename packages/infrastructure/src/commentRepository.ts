@@ -1,72 +1,86 @@
-import { Schema, model, Document, Types } from "mongoose";
-import { Comment } from "@12tree/domain";
-import { ICommentRepository } from "@12tree/domain";
-import conn from "./connectionUtil";
+import {
+  Comment,
+  ICommentRepository,
+  IUserReposistory,
+  NotFoundError,
+} from "@12tree/domain";
+import { Mongoose, Types } from "mongoose";
+import { mapPropsToComment } from "./mappers";
+import { Models } from "./schemas";
 
-export type IComment = Omit<Comment, "user">;
+export default function (
+  { TrackModel, CommentModel }: Models,
+  userRepo: IUserReposistory
+): ICommentRepository {
+  async function create(
+    trackId: string,
+    comment: Omit<Comment, "id" | "createdAt">
+  ) {
+    const track = await TrackModel.findById(trackId);
 
-export const schema = new Schema<IComment>(
-  {
-    comment: { type: String, required: true },
-  },
-  {
-    timestamps: true,
+    if (!track) {
+      throw new NotFoundError(`Track not found with id: ${trackId}`);
+    }
+
+    const doc = new CommentModel({
+      user_id: comment.user.id,
+      comment: comment.comment,
+    });
+
+    const savedComment = await doc.save();
+
+    let index = track.comments.push(savedComment._id);
+    const savedTrack = await track.save();
+    const user = await userRepo.get(comment.user.id);
+
+    return mapPropsToComment(savedComment, user);
   }
-);
 
-const commentModel = conn.model<IComment>("Comment", schema);
+  async function get(id: string) {
+    const comment = await CommentModel.findById(id);
 
-async function get(id: string) {
-  if (!Types.ObjectId.isValid(id)) {
-    return;
+    if (!comment) {
+      throw new NotFoundError(`Comment with id: ${id} not found`);
+    }
+
+    return mapPropsToComment(comment, await userRepo.get(comment.user_id));
   }
 
-  let comment = await commentModel.findById(id);
+  async function remove(id: string) {
+    const comment = await CommentModel.findByIdAndRemove(id);
 
-  if (!comment) {
-    return;
+    if (!comment) {
+      throw new NotFoundError(`Comment with id ${id} not found`);
+    }
+
+    await comment.save();
+
+    return mapPropsToComment(comment, await userRepo.get(comment.user_id));
   }
 
-  return comment;
+  async function update(
+    id: string,
+    comment: Omit<Comment, "id" | "createdAt">
+  ) {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundError("Id is not valid");
+    }
+
+    let updatedComment = await CommentModel.findByIdAndUpdate(id, {
+      comment: comment.comment,
+    });
+
+    if (!updatedComment) {
+      throw new NotFoundError(`Comment with id: ${id} not found`);
+    }
+
+    return mapPropsToComment(updatedComment, comment.user);
+  }
+
+  return {
+    create,
+    get,
+    update,
+    delete: remove,
+  };
 }
-
-async function getAll() {
-  let comment = await commentModel.find();
-
-  return comment;
-}
-
-async function remove(id: string) {
-  if (!Types.ObjectId.isValid(id)) {
-    return false;
-  }
-
-  let deleted = await commentModel.findByIdAndDelete(id);
-
-  console.log(deleted);
-
-  return true;
-}
-
-async function update(id: string, comment: Partial<Omit<Comment, "user">>) {
-  if (!Types.ObjectId.isValid(id)) {
-    return;
-  }
-
-  let updatedComment = await commentModel.findByIdAndUpdate(id, comment);
-
-  if (!updatedComment) {
-    return;
-  }
-
-  return updatedComment;
-}
-
-const commentRepo: ICommentRepository = {
-  get,
-  getAll,
-  delete: remove,
-  update,
-};
-
-export default commentRepo;
