@@ -1,12 +1,14 @@
 import Comment from "../entities/comment";
 
-type OmittedComment = Omit<Comment, "user">;
 export default interface ICommentRepository {
-  get(id: string): Promise<OmittedComment | undefined>;
-  getAll(): Promise<OmittedComment[]>;
-  delete(id: string): Promise<boolean>;
+  get(id: string): Promise<Comment>;
+  delete(id: string): Promise<Comment>;
   update(
     id: string,
-    comment: Partial<Omit<Comment, "user">>
-  ): Promise<OmittedComment | undefined>;
+    comment: Omit<Comment, "id" | "createdAt">
+  ): Promise<Comment>;
+  create(
+    trackId: string,
+    comment: Omit<Comment, "id" | "createdAt">
+  ): Promise<Comment>;
 }

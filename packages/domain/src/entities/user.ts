@@ -16,6 +16,8 @@ export default interface User {
   friends: User[];
 }
 
+export type UserInfo = Omit<User, "token">;
+
 export function isTokenExpired(token: Token): boolean {
   const expiresOn = new Date(token.createdAt);
   expiresOn.setSeconds(expiresOn.getSeconds() + token.expiresIn);
