@@ -113,7 +113,7 @@ export const getAccessToken = (state: RootState) => {
     return state.auth.load.user.token.accessToken;
   }
 
-  return undefined;
+  return "";
 };
 
 export default authSlice.reducer;

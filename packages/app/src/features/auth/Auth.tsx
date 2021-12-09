@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import React from "react";
 import { useCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";
@@ -12,23 +13,15 @@ export default function Auth({ children }: AuthProps) {
   const [cookie, setCookie] = useCookies(["jwt"]);
   const [status, dispatch] = useAuth();
 
-  if (cookie["jwt"]) {
-    dispatch({ method: "token", token: cookie["jwt"] });
-  }
-
-  if (
-    status === Status.UNAUTHORIZEDSTATE ||
-    status === Status.IDLE ||
-    status === Status.ERROR
-  ) {
-    return <Navigate to="/login" />;
+  if (status === Status.LOADING || (status === Status.IDLE && cookie["jwt"])) {
+    return <Loading />;
   }
 
   if (status === Status.AUTHENICATED) {
     return children;
   }
 
-  return <Loading />;
+  return <Navigate to="/login" />;
 }
 
 function Loading() {

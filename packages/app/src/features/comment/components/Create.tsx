@@ -21,12 +21,6 @@ export default function Create() {
           email: "dummy@dummy.com",
           username: "dummy",
           friends: [],
-          token: {
-            accessToken: "",
-            refreshToken: "",
-            expiresIn: 0,
-            createdAt: 0,
-          },
         },
       })
     )
