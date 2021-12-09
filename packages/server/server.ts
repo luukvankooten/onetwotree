@@ -8,7 +8,7 @@ import express from "./src/app";
 
 const app = express({
   repositories: builder(
-    MongooseConnection,
+    MongooseConnection(process.env.MONGO_CONNECTION_STRING || ""),
     SpotifyApiConnection,
     Neo4jConnection
   ),

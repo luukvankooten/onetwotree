@@ -38,10 +38,34 @@
     "@types/passport-spotify": "^2.0.1",
     "@types/supertest": "^2.0.11",
     "@vercel/ncc": "^0.32.0",
+    "jest-ts-auto-mock": "^2.0.0",
+    "mongodb-memory-server": "^8.0.4",
     "nodemon": "^2.0.15",
-    "supertest": "^6.1.6"
+    "supertest": "^6.1.6",
+    "ts-auto-mock": "^3.5.0",
+    "ttypescript": "^1.5.13"
   },
   "jest": {
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "testTimeout": 30000,
+    "setupFiles": [
+      "dotenv/config"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>setupTestConfig.ts"
+    ],
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "compiler": "ttypescript"
+      }
+    },
+    "projects": [
+      "<rootDir>",
+      "<rootDir>/../infrastructure",
+      "<rootDir>/../validation"
+    ]
   }
 }

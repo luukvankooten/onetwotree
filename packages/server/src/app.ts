@@ -30,7 +30,7 @@ export default function ({
 
   const apiV1 = express.Router();
   apiV1.use("/comments", commentControllers({ commentRepo }));
-  apiV1.use("/users", userControllers());
+  apiV1.use("/users", userControllers(userRepo));
   apiV1.use("/tracks", trackControllers({ trackRepo, rateRepo, commentRepo }));
   apiV1.use("/rates", rateControllers({ rateRepo }));
 
@@ -46,8 +46,19 @@ export default function ({
         res.status(404);
       } else if ("ValidationError" === err.name) {
         res.status(400);
+      } else if ("WebapiRegularError" === err.name && err.statusCode === 400) {
+        res.status(404);
+      } else if ("Unauthorized" === err.name) {
+        res.status(401);
       } else {
-        res.status(500);
+        //Show http 500
+        res.status(500).end();
+
+        if (process.env.NODE_ENV === "production") {
+          console.error(err);
+        }
+
+        return;
       }
 
       res.json({
