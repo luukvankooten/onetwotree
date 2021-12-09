@@ -15,7 +15,7 @@ describe("Test RUD", () => {
 
     expect(response.body.name).toBe("INDUSTRY BABY (feat. Jack Harlow)");
 
-    expect(repos.trackRepo.get(response.body.id)).resolves.not.toThrow();
+    expect(repos.trackRepo.get(response.body.id)).resolves.toBeDefined();
   });
 
   it("should throw not found error", async () => {

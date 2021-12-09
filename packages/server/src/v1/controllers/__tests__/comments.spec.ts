@@ -22,7 +22,7 @@ describe("Comments CRUD", () => {
 
     expect(response.body.comment).toBe("hello world");
 
-    expect(repos.commentRepo.get(response.body.id)).resolves.not.toThrow();
+    expect(repos.commentRepo.get(response.body.id)).resolves.toBeDefined();
   });
 
   it("should fail to create comment", async () => {});

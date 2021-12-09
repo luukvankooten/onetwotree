@@ -21,11 +21,8 @@ globalThis.beforeEach((done) => {
     .catch((err) => done(err));
 });
 
-globalThis.afterEach((done) => {
-  mongod
-    ?.stop(true)
-    .then(() => done())
-    .catch((err) => done(err));
+globalThis.afterEach(async () => {
+  await mongod.stop(true);
 });
 
 declare global {
