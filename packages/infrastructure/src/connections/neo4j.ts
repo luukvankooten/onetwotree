@@ -1,4 +1,7 @@
 import Neode from "neode";
 
-//ski-cipher-float-violin-emotion-9685
-export default new Neode("bolt://localhost:7687", "", "");
+export default new Neode(
+  process.env.NEO4J_HOST || "",
+  process.env.NEO4J_USERNAME || "",
+  process.env.NEO4J_PASSWORD || ""
+);
