@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "the backend of the onetwotree",
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "pwd": "pwd",
     "build": "ncc build server.ts -m -o dist",
     "start": "nodemon --watch ../validation --watch ../domain --watch ../infrastructure  --watch ./ -r dotenv/config server.ts"
