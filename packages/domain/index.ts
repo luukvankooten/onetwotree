@@ -27,6 +27,13 @@ export interface Repositories {
   trackRepo: _ITrackReposistory;
 }
 
+export class Unauthorized extends Error {
+  constructor(message?: string) {
+    super(message ?? "Not authorized");
+    this.name = "Unauthorized";
+  }
+}
+
 export class NotFoundError extends Error {
   constructor(message?: string) {
     super(message ?? "Not Found");
