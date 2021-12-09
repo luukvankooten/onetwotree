@@ -12,9 +12,12 @@ import { MongooseModels } from "./schemas";
 const searchedResults: SearchTrack[] = [];
 
 //Due: to rate limit cache
-setInterval(() => {
-  searchedResults.length = 0;
-}, 30000);
+
+if (process.env.NODE_ENV !== "test") {
+  setInterval(() => {
+    searchedResults.length = 0;
+  }, 30000);
+}
 
 export default function (
   { TrackModel }: MongooseModels,
