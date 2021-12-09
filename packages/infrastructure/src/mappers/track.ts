@@ -1,7 +1,6 @@
 import { MongoTrack } from "../schemas/track";
 import { IUserReposistory, Track } from "@12tree/domain";
 import { mapPropsToComment, mapPropsToRate } from ".";
-import user from "../schemas/user";
 
 export async function mapPropsToTrack(
   track: MongoTrack,

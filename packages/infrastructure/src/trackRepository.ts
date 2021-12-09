@@ -7,7 +7,7 @@ import {
 } from "@12tree/domain";
 import { mapPropsToTrack } from "./mappers";
 import SpotifyWebApi from "spotify-web-api-node";
-import { Models } from "./schemas";
+import { MongooseModels } from "./schemas";
 
 const searchedResults: SearchTrack[] = [];
 
@@ -17,7 +17,7 @@ setInterval(() => {
 }, 30000);
 
 export default function (
-  { TrackModel }: Models,
+  { TrackModel }: MongooseModels,
   SpotifyApiConnection: Promise<SpotifyWebApi>,
   userRepo: IUserReposistory
 ): ITrackReposistory {
@@ -105,7 +105,8 @@ export default function (
         name: track.name,
         artists: track.artists,
         cover: track.cover,
-      })
+      }),
+      { new: true }
     );
 
     if (!trackFound) {

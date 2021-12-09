@@ -12,9 +12,19 @@ export interface Models {
   UserModel: ReturnType<typeof createUserModel>;
 }
 
+export type MongooseModels = Omit<Models, "UserModel">;
+
+export function buildMongooseModels(
+  mongoose: MongooseConnection
+): MongooseModels {
+  return {
+    TrackModel: createTrackModel(mongoose),
+    CommentModel: createCommentModel(mongoose),
+    RateModel: createRatingModel(mongoose),
+  };
+}
+
 export default (mongoose: MongooseConnection, neode: Neode): Models => ({
-  TrackModel: createTrackModel(mongoose),
-  CommentModel: createCommentModel(mongoose),
-  RateModel: createRatingModel(mongoose),
+  ...buildMongooseModels(mongoose),
   UserModel: createUserModel(neode),
 });

@@ -1,4 +1,4 @@
-import Neode from "neode";
+import Neode, { Relationship } from "neode";
 
 export type UserNeo4j = {
   id: string;
@@ -9,7 +9,7 @@ export type UserNeo4j = {
   token_refreshToken: string;
   token_expiresIn: number;
   token_createdAt: number;
-  friends: UserNeo4j[];
+  followers: Relationship[];
 };
 
 export default (neode: Neode) =>
@@ -26,12 +26,15 @@ export default (neode: Neode) =>
     token_refreshToken: "string",
     token_expiresIn: "number",
     token_createdAt: "number",
-    friends: {
+    followers: {
       type: "relationships",
-      target: "User",
-      relationship: "KNOWS",
+      relationship: "FOLLOWS",
       direction: "out",
+      target: "User",
       cascade: "detach",
       eager: true,
+      properties: {
+        accepted: "boolean",
+      },
     },
   });

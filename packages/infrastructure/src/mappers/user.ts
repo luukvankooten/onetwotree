@@ -34,6 +34,6 @@ export function mapUserToProps(user: User): UserNeo4j {
     token_refreshToken: user.token.refreshToken,
     token_expiresIn: user.token.expiresIn,
     token_createdAt: user.token.createdAt,
-    friends: [],
+    followers: [],
   };
 }

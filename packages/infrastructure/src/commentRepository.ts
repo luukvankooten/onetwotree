@@ -4,12 +4,12 @@ import {
   IUserReposistory,
   NotFoundError,
 } from "@12tree/domain";
-import { Mongoose, Types } from "mongoose";
+import { Types } from "mongoose";
 import { mapPropsToComment } from "./mappers";
-import { Models } from "./schemas";
+import { MongooseModels } from "./schemas";
 
 export default function (
-  { TrackModel, CommentModel }: Models,
+  { TrackModel, CommentModel }: MongooseModels,
   userRepo: IUserReposistory
 ): ICommentRepository {
   async function create(
@@ -66,9 +66,13 @@ export default function (
       throw new NotFoundError("Id is not valid");
     }
 
-    let updatedComment = await CommentModel.findByIdAndUpdate(id, {
-      comment: comment.comment,
-    });
+    let updatedComment = await CommentModel.findByIdAndUpdate(
+      id,
+      {
+        comment: comment.comment,
+      },
+      { new: true }
+    );
 
     if (!updatedComment) {
       throw new NotFoundError(`Comment with id: ${id} not found`);

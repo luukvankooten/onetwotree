@@ -11,6 +11,4 @@ mongoose.set("toObject", {
   },
 });
 
-const conn = mongoose.createConnection("mongodb://localhost:27017/comment");
-
-export default conn;
+export default (url: string) => mongoose.createConnection(url);

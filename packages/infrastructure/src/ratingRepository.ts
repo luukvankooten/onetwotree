@@ -4,11 +4,11 @@ import {
   NotFoundError,
 } from "@12tree/domain";
 import { Rate } from "@12tree/domain";
-import { Models } from "./schemas";
+import { MongooseModels } from "./schemas";
 import { mapPropsToRate } from "./mappers";
 
 export default function (
-  { RateModel, TrackModel }: Models,
+  { RateModel, TrackModel }: MongooseModels,
   userRepo: IUserReposistory
 ): IRatingReposistory {
   async function get(id: string): Promise<Rate> {
@@ -24,6 +24,7 @@ export default function (
   async function create(trackId: string, rate: Omit<Rate, "id">) {
     const track = await TrackModel.findById(trackId);
 
+    console.log(track);
     if (!track) {
       throw new NotFoundError();
     }
@@ -41,9 +42,13 @@ export default function (
   }
 
   async function update(id: string, rate: Omit<Rate, "createdAt">) {
-    const updateRate = await RateModel.findByIdAndUpdate(rate.id, {
-      rating: rate.rating,
-    });
+    const updateRate = await RateModel.findByIdAndUpdate(
+      rate.id,
+      {
+        rating: rate.rating,
+      },
+      { new: true }
+    );
 
     if (!updateRate) {
       throw new NotFoundError();
