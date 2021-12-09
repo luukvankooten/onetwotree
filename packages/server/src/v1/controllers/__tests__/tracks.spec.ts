@@ -15,7 +15,11 @@ describe("Test RUD", () => {
 
     expect(response.body.name).toBe("INDUSTRY BABY (feat. Jack Harlow)");
 
-    expect(repos.trackRepo.get(response.body.id)).resolves.toBeDefined();
+    const track = await repos.trackRepo.get(response.body.id);
+
+    expect(track).toMatchObject({
+      id: response.body.id,
+    });
   });
 
   it("should throw not found error", async () => {
@@ -29,7 +33,5 @@ describe("Test RUD", () => {
         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUwZjcxYmU3LTU5MTYtNGJlMC1iODJiLWVmY2RhZTE1YTNlZCIsIm5hbWUiOiJMdXVrIiwidXNlcm5hbWUiOiJrb29sMTcxIiwiZW1haWwiOiJsdXVrdmFua29vdGVuQGdtYWlsLmNvbSIsImlhdCI6MTYzODc4NDE4NX0.-fm1RvTNn7ouqV0X6Fyhn-LhVqdzsNMnM5RyM_jBn54"
       )
       .expect(404);
-
-    expect(repos.trackRepo.get(response.body.id)).rejects.toThrow();
   });
 });
