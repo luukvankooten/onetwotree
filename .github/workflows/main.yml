@@ -16,7 +16,7 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "lvk-2173630-12tree"
-          heroku_email: "lvankooten@student.avans.nl"
+          heroku_email: "l.vankooten@student.avans.nl"
           usedocker: true
           docker_build_args: |
             NODE_ENV
