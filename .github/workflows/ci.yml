@@ -3,11 +3,18 @@ name: CI
 on: push
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
 
     env:
       CI: true
+      MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING }}
+      NEO4J_HOST: ${{ secrets.NEO4J_HOST }}
+      NEO4J_USERNAME: ${{secrets.NEO4J_USERNAME }}
+      NEO4J_PASSWORD: ${{secrets.NEO4J_PASSWORD }}
+      SPOTIFY_CLIENT_ID: ${{secrets.SPOTIFY_CLIENT_ID }}
+      SPOTIFY_CLIENT_SECRET: ${{secrets.SPOTIFY_CLIENT_SECRET }}
+      NODE_OPTIONS: "--unhandled-rejections=warn"
 
     steps:
       - uses: actions/checkout@v2
@@ -20,4 +27,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - run: npm run build --if-present
-      - run: npm test -ws --if-present
+      - run: npm run test:all -- --forceExit
+
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

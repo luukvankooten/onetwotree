@@ -6,7 +6,7 @@
     "test": "jest",
     "pwd": "pwd",
     "build": "ncc build server.ts -m -o dist",
-    "start": "nodemon -r dotenv/config server.ts"
+    "start": "nodemon --watch ../validation --watch ../domain --watch ../infrastructure  --watch ./ -r dotenv/config server.ts"
   },
   "keywords": [
     "server"
@@ -15,19 +15,58 @@
   "license": "ISC",
   "dependencies": {
     "@12tree/domain": "file:../domain",
+    "@12tree/infrastructure": "file:../infrastructure",
+    "@12tree/validation": "file:../validation",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-async-handler": "^1.2.0",
+    "node-fetch": "^2.6.6",
     "passport": "^0.5.0",
     "passport-jwt": "^4.0.0",
-    "passport-spotify": "^2.0.0"
-  },
-  "devDependencies": {
+    "passport-local": "^1.0.0",
+    "passport-oauth2-refresh": "^2.1.0",
+    "passport-spotify": "^2.0.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.12",
     "@types/passport": "^1.0.7",
     "@types/passport-jwt": "^3.0.6",
+    "@types/passport-local": "^1.0.34",
+    "@types/passport-oauth2-refresh": "^1.1.1",
     "@types/passport-spotify": "^2.0.1",
+    "@types/supertest": "^2.0.11",
     "@vercel/ncc": "^0.32.0",
-    "nodemon": "^2.0.15"
+    "jest": "^27.4.3",
+    "jest-ts-auto-mock": "^2.0.0",
+    "mongodb-memory-server": "^8.0.4",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6",
+    "ts-auto-mock": "^3.5.0",
+    "ts-jest": "^27.1.1",
+    "ttypescript": "^1.5.13"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testTimeout": 30000,
+    "setupFiles": [
+      "dotenv/config"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>setupTestConfig.ts"
+    ],
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "compiler": "ttypescript"
+      }
+    },
+    "projects": [
+      "<rootDir>",
+      "<rootDir>/../infrastructure",
+      "<rootDir>/../validation"
+    ]
   }
 }

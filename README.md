@@ -15,7 +15,7 @@ packages/
 	services/			"Entity objects"
 ```
 
-[See server readme](../blob/master/packages/server/README.md)
+[See server readme](../master/packages/server/README.md)
 
 ## Scripts
 

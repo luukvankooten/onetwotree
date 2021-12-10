@@ -12,13 +12,15 @@ export default function Create() {
   const onSubmit = handleSubmit((data) =>
     dispatch(
       add({
+        id: "",
         comment: data.comment,
-        created: Date.now(),
+        createdAt: Date.now(),
         user: {
+          id: "",
           name: "dummy dummy",
           email: "dummy@dummy.com",
           username: "dummy",
-          token: "",
+          friends: [],
         },
       })
     )

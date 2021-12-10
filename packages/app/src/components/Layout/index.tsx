@@ -6,7 +6,9 @@ export default function Layout() {
   return (
     <React.Fragment>
       <Nav />
-      <Outlet />
+      <main className="min-h-full container mx-auto">
+        <Outlet />
+      </main>
     </React.Fragment>
   );
 }

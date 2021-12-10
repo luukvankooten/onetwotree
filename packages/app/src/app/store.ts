@@ -1,13 +1,15 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import commentReducer from "../features/comment/commentSlice";
-import counterReducer from "../features/counter/counterSlice";
+import searchReducer from "../features/search/searchSlice";
+import trackReducer from "../features/tracks/tracksSlice";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    search: searchReducer,
     comment: commentReducer,
     auth: authReducer,
+    tracks: trackReducer,
   },
 });
 

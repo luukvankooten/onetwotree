@@ -23,7 +23,7 @@ export default function Routes() {
           >
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
-            <Route path="rate-track" element={<RateTrack />} />
+            <Route path="rate-track/:id" element={<RateTrack />} />
           </Route>
         </ReactRouter>
       </BrowserRouter>

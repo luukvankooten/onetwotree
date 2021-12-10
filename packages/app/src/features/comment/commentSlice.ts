@@ -6,55 +6,8 @@ export interface commentState {
   comments: Comment[];
 }
 
-const user1: User = {
-  username: "Luuk",
-  email: "l.vankooten@student.avans.nl",
-  name: "Luuk van Kooten",
-  token: "",
-};
-
-const user2: User = {
-  username: "Pascal",
-  email: "p.stoop@student.avans.nl",
-  name: "Pascal Stoop",
-  token: "",
-};
-
-const user3: User = {
-  username: "Ali",
-  email: "a.bikini@student.avans.nl",
-  name: "Ali Bikini",
-  token: "",
-};
-
 const initialState: commentState = {
-  comments: [
-    {
-      user: user3,
-      comment: "Super track",
-      created: Date.now(),
-    },
-    {
-      user: user1,
-      comment: "Leuk",
-      created: Date.now(),
-    },
-    {
-      user: user1,
-      comment: "Topp",
-      created: Date.now(),
-    },
-    {
-      user: user2,
-      comment: "Deze artiets is goed",
-      created: Date.now(),
-    },
-    {
-      user: user2,
-      comment: "Niet normaal",
-      created: Date.now(),
-    },
-  ],
+  comments: [],
 };
 
 type UpdateComment = {
