@@ -1,6 +1,5 @@
 import { MongoComment } from "../schemas/comment";
 import { Comment, UserInfo } from "@12tree/domain";
-import userRepo from "../userRepository";
 
 export async function mapPropsToComment(
   comment: MongoComment,

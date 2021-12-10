@@ -50,6 +50,8 @@ export default function ({
         res.status(404);
       } else if ("Unauthorized" === err.name) {
         res.status(401);
+      } else if ("CastError" === err.name) {
+        res.status(400);
       } else {
         //Show http 500
         res.status(500).end();

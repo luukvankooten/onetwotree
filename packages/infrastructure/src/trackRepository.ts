@@ -116,8 +116,6 @@ export default function (
       throw new NotFoundError(`Track not found with id: ${track.id}`);
     }
 
-    await trackFound.save();
-
     return await mapPropsToTrack(trackFound, userRepo);
   }
 
