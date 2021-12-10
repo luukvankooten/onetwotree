@@ -21,12 +21,12 @@ if (process.env.NODE_ENV !== "test") {
 
 export default function (
   { TrackModel }: MongooseModels,
-  SpotifyApiConnection: Promise<SpotifyWebApi>,
+  SpotifyApiConnection: () => Promise<SpotifyWebApi>,
   userRepo: IUserReposistory
 ): ITrackReposistory {
   async function search(query: string) {
     try {
-      const api = await SpotifyApiConnection;
+      const api = await SpotifyApiConnection();
 
       const tracks = await api.searchTracks(`track:${query}`);
 
@@ -80,7 +80,7 @@ export default function (
   }
 
   async function create(id: string) {
-    const api = await SpotifyApiConnection;
+    const api = await SpotifyApiConnection();
     const spotifyTrack = await api.getTrack(id);
 
     if (spotifyTrack.statusCode !== 200) {

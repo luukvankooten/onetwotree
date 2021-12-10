@@ -1,11 +1,11 @@
 import SpotifyWebApi from "spotify-web-api-node";
 
-const spotify = (async () => {
-  const api = new SpotifyWebApi({
-    clientId: process.env.SPOTIFY_CLIENT_ID,
-    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  });
+const api = new SpotifyWebApi({
+  clientId: process.env.SPOTIFY_CLIENT_ID,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+});
 
+const spotify = async () => {
   if (!api.getAccessToken()) {
     const data = await api.clientCredentialsGrant();
 
@@ -13,6 +13,6 @@ const spotify = (async () => {
   }
 
   return api;
-})();
+};
 
 export default spotify;
