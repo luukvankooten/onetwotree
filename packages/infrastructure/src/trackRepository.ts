@@ -104,11 +104,11 @@ export default function (
   async function update(track: Track) {
     const trackFound = await TrackModel.findOneAndUpdate(
       { id: track.id },
-      new TrackModel({
+      {
         name: track.name,
         artists: track.artists,
         cover: track.cover,
-      }),
+      },
       { new: true }
     );
 

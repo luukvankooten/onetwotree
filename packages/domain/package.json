@@ -14,8 +14,5 @@
   "bugs": {
     "url": "https://github.com/luukvankooten/onetwotree/issues"
   },
-  "homepage": "https://github.com/luukvankooten/onetwotree#readme",
-  "jest": {
-    "preset": "ts-jest"
-  }
+  "homepage": "https://github.com/luukvankooten/onetwotree#readme"
 }
