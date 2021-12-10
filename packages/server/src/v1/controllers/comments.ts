@@ -13,14 +13,14 @@ export default function ({ commentRepo }: CommentDependencies): Router {
   router.get(
     "/:id",
     asyncHandler(async (req, res) => {
-      res.json(await commentRepo.get(req.params.id));
+      res.json(await commentRepo.get(req.params.id.toString()));
     })
   );
 
   router.delete(
     "/:id",
     asyncHandler(async (req, res) => {
-      res.json(await commentRepo.delete(req.params.id));
+      res.json(await commentRepo.delete(req.params.id.toString()));
     })
   );
 
@@ -30,7 +30,7 @@ export default function ({ commentRepo }: CommentDependencies): Router {
       const validator = await commentValidator.validate(req.body);
 
       res.json(
-        await commentRepo.update(req.params.id, {
+        await commentRepo.update(req.params.id.toString(), {
           comment: validator.comment,
           user: req.user as UserInfo,
         })

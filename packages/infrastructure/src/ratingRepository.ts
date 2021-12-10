@@ -24,7 +24,6 @@ export default function (
   async function create(trackId: string, rate: Omit<Rate, "id">) {
     const track = await TrackModel.findById(trackId);
 
-    console.log(track);
     if (!track) {
       throw new NotFoundError();
     }
@@ -34,11 +33,11 @@ export default function (
       user_id: rate.user.id,
     });
 
-    await newRate.save();
+    const saved = await newRate.save();
+    track.comments.push(saved._id);
+    await track.save();
 
-    track.comments.push(newRate._id);
-
-    return mapPropsToRate(newRate, await userRepo.get(rate.user.id));
+    return mapPropsToRate(saved, await userRepo.get(rate.user.id));
   }
 
   async function update(id: string, rate: Omit<Rate, "createdAt">) {
@@ -65,8 +64,6 @@ export default function (
     if (!deletedRate) {
       throw new NotFoundError();
     }
-
-    await deletedRate.save();
 
     return mapPropsToRate(deletedRate, await userRepo.get(deletedRate.user_id));
   }
