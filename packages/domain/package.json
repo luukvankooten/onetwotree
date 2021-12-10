@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "jest",
     "build": "tsc"
   },
   "repository": {
@@ -15,24 +14,5 @@
   "bugs": {
     "url": "https://github.com/luukvankooten/onetwotree/issues"
   },
-  "homepage": "https://github.com/luukvankooten/onetwotree#readme",
-  "dependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/preset-env": "^7.16.4",
-    "@babel/preset-typescript": "^7.16.0",
-    "babel-jest": "^27.4.2"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "current"
-          }
-        }
-      ],
-      "@babel/preset-typescript"
-    ]
-  }
+  "homepage": "https://github.com/luukvankooten/onetwotree#readme"
 }

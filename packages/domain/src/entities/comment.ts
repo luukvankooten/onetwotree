@@ -1,8 +1,8 @@
-import User from "./user";
+import { UserInfo } from "./user";
 
 export default interface Comment {
   id: string;
-  user: User;
+  user: UserInfo;
   comment: string;
   createdAt: Number;
   updatedAt?: Number;

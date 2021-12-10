@@ -28,6 +28,15 @@ const validatorObject = yup
   })
   .required();
 
+export const updateUservalidatorObject = yup
+  .object({
+    name: name.optional(),
+    username: username.min(5).max(255).optional(),
+    email: email.optional(),
+    password: password.min(8).max(255).optional(),
+  })
+  .required();
+
 export const newUserValidatorObject = yup
   .object({
     name,

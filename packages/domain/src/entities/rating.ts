@@ -1,5 +1,4 @@
-import Track from "./track";
-import User from "./user";
+import { UserInfo } from "./user";
 
 export enum Rating {
   ONE,
@@ -8,8 +7,10 @@ export enum Rating {
   FOUR,
   FIVE,
 }
-export interface Rate {
+export default interface Rate {
+  id: string;
   rating: Rating;
-  user: User;
-  created: Date;
+  user: UserInfo;
+  createdAt: number;
+  updatedAt?: number;
 }

@@ -13,8 +13,12 @@ export default interface User {
   email: string;
   username: string;
   token: Token;
-  friends: User[];
+  friends: UserFriend[];
 }
+
+export type UserFriend = UserInfo & { accepted: boolean };
+
+export type UserInfo = Omit<User, "token">;
 
 export function isTokenExpired(token: Token): boolean {
   const expiresOn = new Date(token.createdAt);

@@ -1,58 +1,42 @@
-import express from "express";
-import { commentRepo } from "../../index";
+import express, { Router } from "express";
 import { commentValidator } from "@12tree/validation";
-import validator from "@12tree/validation/src/comment";
+import asyncHandler from "express-async-handler";
+import { ICommentRepository, UserInfo } from "@12tree/domain";
 
-const router = express.Router();
+interface CommentDependencies {
+  commentRepo: ICommentRepository;
+}
 
-const response = async (req: any, res: any, next: any) => {
-  next();
-};
+export default function ({ commentRepo }: CommentDependencies): Router {
+  const router = express.Router();
 
-router.get("/", async (req, res) => {
-  res.json(await commentRepo.getAll());
-});
+  router.get(
+    "/:id",
+    asyncHandler(async (req, res) => {
+      res.json(await commentRepo.get(req.params.id));
+    })
+  );
 
-router.get("/:id", async (req, res) => {
-  let comment = await commentRepo.get(req.params.id);
+  router.delete(
+    "/:id",
+    asyncHandler(async (req, res) => {
+      res.json(await commentRepo.delete(req.params.id));
+    })
+  );
 
-  if (!comment) {
-    res.status(404).end();
-  }
+  router.put(
+    "/:id",
+    asyncHandler(async (req, res) => {
+      const validator = await commentValidator.validate(req.body);
 
-  res.json(comment).end();
-});
+      res.json(
+        await commentRepo.update(req.params.id, {
+          comment: validator.comment,
+          user: req.user as UserInfo,
+        })
+      );
+    })
+  );
 
-router.delete("/:id", async (req, res) => {
-  let deleted = await commentRepo.delete(req.params.id);
-
-  if (deleted) {
-    res.status(204).end();
-  }
-
-  res.status(404).end();
-});
-
-router.put("/:id", async (req, res) => {
-  let validator;
-
-  try {
-    validator = await commentValidator.validate(req.body);
-  } catch (err) {
-    res.status(400).json(err).end();
-
-    return;
-  }
-
-  const comment = await commentRepo.update(req.params.id, { ...validator });
-
-  if (!comment) {
-    res.status(404).end();
-  }
-
-  res.json(comment);
-});
-
-router.post("/", response);
-
-export default router;
+  return router;
+}

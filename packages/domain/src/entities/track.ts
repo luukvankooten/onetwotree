@@ -1,11 +1,16 @@
 import Comment from "./comment";
-import { Rate, Rating } from "./rating";
+import Rate, { Rating } from "./rating";
 
 export default interface Track {
-  song: string;
-  artist: string;
+  id: string;
+  spotifyId: string;
+  name: string;
+  artists: string[];
+  cover: string;
   comments: Comment[];
   ratings: Rate[];
+  createdAt: number;
+  updatedAt?: number;
 }
 
 export interface SearchTrack {
