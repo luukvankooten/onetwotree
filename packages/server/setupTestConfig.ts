@@ -4,6 +4,7 @@ import app from "./src";
 import { Repositories } from "@12tree/domain";
 import { Express } from "express";
 import { MongoMemoryServer } from "mongodb-memory-server";
+import { close } from "@12tree/infrastructure/src/connections/mongoose";
 
 jest.mock("@12tree/infrastructure");
 
@@ -17,6 +18,7 @@ globalThis.beforeEach(async () => {
 });
 
 globalThis.afterEach(async () => {
+  await close();
   await mongod.stop(true);
 });
 
