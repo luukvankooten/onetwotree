@@ -10,15 +10,10 @@ jest.mock("@12tree/infrastructure");
 let mongod: MongoMemoryServer;
 let mongoConnection: string;
 
-globalThis.beforeEach((done) => {
+globalThis.beforeEach(async () => {
   jest.clearAllMocks();
-  MongoMemoryServer.create()
-    .then((deamon) => {
-      mongod = deamon;
-      mongoConnection = mongod.getUri();
-      done();
-    })
-    .catch((err) => done(err));
+  mongod = await MongoMemoryServer.create();
+  mongoConnection = mongod.getUri();
 });
 
 globalThis.afterEach(async () => {
