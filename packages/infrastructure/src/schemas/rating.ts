@@ -11,7 +11,6 @@ export type MongoRate = HydratedDocument<
 
 export const schema = new Schema<MongoRate>(
   {
-    id: { type: String, required: true, unique: true },
     rating: { type: Number, required: true },
     user_id: { type: String, required: true },
   },

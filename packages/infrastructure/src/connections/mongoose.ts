@@ -11,4 +11,18 @@ mongoose.set("toObject", {
   },
 });
 
-export default (url: string) => mongoose.createConnection(url);
+let conn: mongoose.Connection | undefined;
+
+export async function close() {
+  if (!conn) {
+    return;
+  }
+
+  await conn.close();
+}
+
+export default (url: string) => {
+  conn = mongoose.createConnection(url);
+
+  return conn;
+};

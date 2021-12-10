@@ -53,8 +53,6 @@ export default function (
       throw new NotFoundError(`Comment with id ${id} not found`);
     }
 
-    await comment.save();
-
     return mapPropsToComment(comment, await userRepo.get(comment.user_id));
   }
 

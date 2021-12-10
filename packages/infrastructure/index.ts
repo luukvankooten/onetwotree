@@ -12,7 +12,7 @@ import { IUserReposistory, Repositories } from "@12tree/domain";
 export function buildMongooseRepositories(
   models: MongooseModels,
   userRepo: IUserReposistory,
-  spotifyApi: Promise<SpotifyWebApi>
+  spotifyApi: () => Promise<SpotifyWebApi>
 ) {
   const commentRepo = createCommentRepository(models, userRepo);
   const rateRepo = createRateRepository(models, userRepo);
@@ -27,7 +27,7 @@ export function buildMongooseRepositories(
 
 export default function (
   mongoose: MongooseConnection,
-  spotifyApi: Promise<SpotifyWebApi>,
+  spotifyApi: () => Promise<SpotifyWebApi>,
   neode: Neode
 ): Repositories {
   const models = builder(mongoose, neode);

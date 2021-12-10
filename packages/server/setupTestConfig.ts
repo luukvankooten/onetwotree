@@ -4,24 +4,21 @@ import app from "./src";
 import { Repositories } from "@12tree/domain";
 import { Express } from "express";
 import { MongoMemoryServer } from "mongodb-memory-server";
+import { close } from "@12tree/infrastructure/src/connections/mongoose";
 
 jest.mock("@12tree/infrastructure");
 
 let mongod: MongoMemoryServer;
 let mongoConnection: string;
 
-globalThis.beforeEach((done) => {
+globalThis.beforeEach(async () => {
   jest.clearAllMocks();
-  MongoMemoryServer.create()
-    .then((deamon) => {
-      mongod = deamon;
-      mongoConnection = mongod.getUri();
-      done();
-    })
-    .catch((err) => done(err));
+  mongod = await MongoMemoryServer.create();
+  mongoConnection = mongod.getUri();
 });
 
 globalThis.afterEach(async () => {
+  await close();
   await mongod.stop(true);
 });
 
