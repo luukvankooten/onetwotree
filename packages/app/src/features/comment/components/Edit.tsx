@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { Comment } from "@12tree/domain";
-import { edit, selectComment } from "../commentSlice";
+import { updateComment } from "../commentSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useEffect } from "react";
 
 type FormData = {
   comment: string;
@@ -10,19 +11,14 @@ type FormData = {
 type EditProps = {
   index: number;
   toggle: () => void;
+  comment: Comment;
 };
 
-export default function Edit({ index, toggle }: EditProps) {
+export default function Edit({ index, toggle, comment }: EditProps) {
   const { register, handleSubmit } = useForm<FormData>();
   const dispatch = useAppDispatch();
-  const comment = useAppSelector(selectComment(index));
   const onSubmit = handleSubmit((data) => {
-    dispatch(
-      edit({
-        index,
-        comment: data.comment,
-      })
-    );
+    dispatch(updateComment({ id: comment.id, comment: data.comment }));
 
     toggle();
   });

@@ -3,6 +3,7 @@ import authReducer from "../features/auth/authSlice";
 import commentReducer from "../features/comment/commentSlice";
 import searchReducer from "../features/search/searchSlice";
 import trackReducer from "../features/tracks/tracksSlice";
+import ratesReducer from "../features/ratings/ratingsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     comment: commentReducer,
     auth: authReducer,
     tracks: trackReducer,
+    rateings: ratesReducer,
   },
 });
 

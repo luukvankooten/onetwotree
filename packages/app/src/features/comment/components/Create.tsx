@@ -1,29 +1,20 @@
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../../../app/hooks";
-import { add } from "../commentSlice";
+import { add, createComment } from "../commentSlice";
 
 type FormData = {
   comment: string;
 };
 
-export default function Create() {
+interface CreateCommentProps {
+  trackId: string;
+}
+
+export default function Create({ trackId }: CreateCommentProps) {
   const { register, handleSubmit } = useForm<FormData>();
   const dispatch = useAppDispatch();
   const onSubmit = handleSubmit((data) =>
-    dispatch(
-      add({
-        id: "",
-        comment: data.comment,
-        createdAt: Date.now(),
-        user: {
-          id: "",
-          name: "dummy dummy",
-          email: "dummy@dummy.com",
-          username: "dummy",
-          friends: [],
-        },
-      })
-    )
+    dispatch(createComment({ trackId, comment: data.comment }))
   );
 
   return (
@@ -34,7 +25,7 @@ export default function Create() {
             Comment
           </label>
           <textarea
-            className="ppearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="pearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             {...register("comment", { required: true })}
           ></textarea>
         </div>

@@ -108,7 +108,13 @@ export const getStatus = (state: RootState) => state.auth.load.status;
 export const isAuthenicated = (state: RootState) =>
   state.auth.load.status === Status.AUTHENICATED;
 
-export const getAccessToken = (state: RootState) => {
+export const getUser = (state: RootState) => {
+  if (state.auth.load.status === Status.AUTHENICATED) {
+    return state.auth.load.user;
+  }
+};
+
+export const getAccessToken = (state: RootState): string => {
   if (state.auth.load.status === Status.AUTHENICATED) {
     return state.auth.load.user.token.accessToken;
   }

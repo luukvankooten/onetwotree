@@ -1,20 +1,20 @@
 import { Comment } from "@12tree/domain";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import useToggle from "../../../hooks/useToggle";
-import { remove, selectComment } from "../commentSlice";
+import { remove, removeComment, selectComment } from "../commentSlice";
 import Edit from "./Edit";
 
 type ShowProps = {
   index: number;
+  comment: Comment;
 };
 
-export default function Show({ index }: ShowProps) {
+export default function Show({ index, comment }: ShowProps) {
   const [isEdit, toggleEditMode] = useToggle();
   const dispatch = useAppDispatch();
-  const comment = useAppSelector(selectComment(index));
 
   if (isEdit) {
-    return <Edit index={index} toggle={toggleEditMode} />;
+    return <Edit index={index} toggle={toggleEditMode} comment={comment} />;
   }
 
   return (
@@ -39,7 +39,7 @@ export default function Show({ index }: ShowProps) {
         <dt className="text-sm font-medium text-gray-500">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            onClick={() => dispatch(remove(index))}
+            onClick={() => dispatch(removeComment({ id: comment.id }))}
           >
             Verwijder
           </button>
