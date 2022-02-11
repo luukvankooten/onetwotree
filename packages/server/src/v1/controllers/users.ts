@@ -89,5 +89,12 @@ export default function (userRepo: IUserReposistory): Router {
     })
   );
 
+  router.get(
+    "/:id/comments",
+    asyncHandler(async (req, res) => {
+      res.json(await userRepo.getUserCommentsIds(req.params.id));
+    })
+  );
+
   return router;
 }

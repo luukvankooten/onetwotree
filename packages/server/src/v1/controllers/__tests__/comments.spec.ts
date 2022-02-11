@@ -30,8 +30,6 @@ describe("Comments CRUD", () => {
     });
   });
 
-  it("should fail to create comment", async () => {});
-
   it("should update comment", async () => {
     const [repos, app] = buildApp();
 
