@@ -5,6 +5,7 @@ export {
   verify,
   Token,
   UserInfo,
+  UserFriend,
 } from "./src/entities/user";
 
 export { default as Rate } from "./src/entities/rating";
