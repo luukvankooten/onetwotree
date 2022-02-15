@@ -10,9 +10,7 @@ describe("User friends ship CRUD", () => {
 
     let repos = repositories;
 
-    repos.userRepo = userRepository({
-      UserModel: createUserModel(Neo4jConnection),
-    });
+    repos.userRepo = userRepository(createUserModel(Neo4jConnection));
 
     let app = application({ repositories: repos });
 

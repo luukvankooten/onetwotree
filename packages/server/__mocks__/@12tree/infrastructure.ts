@@ -1,5 +1,13 @@
 import { buildMongooseModels } from "@12tree/infrastructure/src/schemas";
-import { Repositories, User } from "@12tree/domain";
+import {
+  IUserReposistory,
+  Repositories,
+  User,
+  Comment,
+  UserInfo,
+  UserFriend,
+  NotFoundError,
+} from "@12tree/domain";
 import spotify from "@12tree/infrastructure/src/connections/spotify";
 import { MongooseConnection } from "@12tree/infrastructure/src/connections";
 
@@ -40,26 +48,42 @@ const users: User[] = [
   },
 ];
 
-const get = async (id: string) => users.find((user) => user.id === id);
+const get = async (id: string) => {
+  const user = users.find((user) => user.id === id);
+
+  if (!user) {
+    throw new NotFoundError();
+  }
+
+  return user;
+};
 const create = async (user: User) => {
   const index = users.push(user);
 
   return users[index - 1];
 };
 
-const getByToken = async (token: string) =>
-  users.find((user) => user.token.accessToken === token);
+const getByToken = async (token: string) => {
+  const user = users.find((user) => user.token.accessToken === token);
 
-const friend = (accepted: boolean) => ({
+  if (!user) {
+    throw new NotFoundError();
+  }
+
+  return user;
+};
+
+const friend = (accepted: boolean): UserFriend => ({
   id: "d83c8cca-96c2-4ad2-a6af-0a220d0fa879",
   name: "Luukv1",
   username: "luukkie",
   email: "l.vankooten@student.com",
   accepted,
+  friends: [],
 });
 
 export default jest.fn((connection: string): Repositories => {
-  const userRepo = {
+  const userRepo: IUserReposistory = {
     create: create,
     getByToken: getByToken,
     getWithToken: get,
@@ -67,11 +91,18 @@ export default jest.fn((connection: string): Repositories => {
     getByRefreshToken: get,
     getByEmail: get,
     delete: get,
-    update: (user: User) => ({ ...get(user.id), ...user }),
+    update: async (user: User) => ({ ...(await get(user.id)), ...user }),
     getFollowers: async () => [],
     unfollow: async () => friend(false),
     accept: async () => friend(true),
     follow: async () => friend(false),
+    getUserCommentsIds: async () => [],
+    addUserComment: async () => ({
+      id: "",
+      comment: "",
+      createdAt: Date.now(),
+      user: users[0],
+    }),
   };
 
   const models = buildMongooseModels(MongooseConnection(connection));
