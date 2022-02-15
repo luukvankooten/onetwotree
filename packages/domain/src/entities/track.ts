@@ -1,17 +1,5 @@
 import Comment from "./comment";
-import Rate, { Rating } from "./rating";
-
-export default interface Track {
-  id: string;
-  spotifyId: string;
-  name: string;
-  artists: string[];
-  cover: string;
-  comments: Comment[];
-  ratings: Rate[];
-  createdAt: number;
-  updatedAt?: number;
-}
+import Rate from "./rating";
 
 export interface SearchTrack {
   id: string;
@@ -27,4 +15,16 @@ export function getOveralRateing(track: Track): number {
   const average = sum / track.ratings.length || 0;
 
   return Math.round(average * 2) / 2;
+}
+
+export default interface Track {
+  id: string;
+  spotifyId: string;
+  name: string;
+  artists: string[];
+  cover: string;
+  comments: Comment[];
+  ratings: Rate[];
+  createdAt: number;
+  updatedAt?: number;
 }

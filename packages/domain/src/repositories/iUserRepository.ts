@@ -1,4 +1,5 @@
 import User, { UserFriend, UserInfo } from "../entities/user";
+import Comment from "../entities/comment";
 
 export default interface IUserReposistory {
   create(user: Omit<User, "friends">): Promise<User>;
@@ -13,4 +14,6 @@ export default interface IUserReposistory {
   follow(userId: string, followId: string): Promise<UserInfo>;
   accept(userId: string, toFollowId: string): Promise<UserInfo>;
   unfollow(userId: string, toUnfollowId: string): Promise<UserInfo>;
+  getUserCommentsIds(userId: string): Promise<string[]>;
+  addUserComment(comment: Comment): Promise<Comment>;
 }

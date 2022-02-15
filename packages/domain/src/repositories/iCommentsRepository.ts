@@ -11,4 +11,5 @@ export default interface ICommentRepository {
     trackId: string,
     comment: Omit<Comment, "id" | "createdAt">
   ): Promise<Comment>;
+  getByIds(ids: string[]): Promise<Comment[]>;
 }
