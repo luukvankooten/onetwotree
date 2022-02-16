@@ -16,10 +16,6 @@ export const searchTrack = createAsyncThunk(
   async (query: string, thunkApi) => {
     const accessToken = getAccessToken(thunkApi.getState() as RootState);
 
-    if (!accessToken) {
-      return [];
-    }
-
     return await searchTrackApi(query, accessToken);
   }
 );

@@ -1,8 +1,10 @@
-export default async <T>(
+import { Unauthorized } from "@12tree/domain";
+
+async function ApiFetch<T>(
   accessToken: string,
   path: string,
   requestInit?: RequestInit
-): Promise<T> => {
+): Promise<T> {
   const host = process.env.REACT_APP_API_URL || "";
 
   const headers = new Headers();
@@ -14,5 +16,11 @@ export default async <T>(
     ...requestInit,
   });
 
+  if (response.status === 401) {
+    throw new Unauthorized();
+  }
+
   return await response.json();
-};
+}
+
+export default ApiFetch;

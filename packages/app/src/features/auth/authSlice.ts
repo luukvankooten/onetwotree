@@ -112,6 +112,8 @@ export const getUser = (state: RootState) => {
   if (state.auth.load.status === Status.AUTHENICATED) {
     return state.auth.load.user;
   }
+
+  throw new Error("No user authenicated");
 };
 
 export const getAccessToken = (state: RootState): string => {
@@ -119,7 +121,7 @@ export const getAccessToken = (state: RootState): string => {
     return state.auth.load.user.token.accessToken;
   }
 
-  return "";
+  throw new Error("No access token!");
 };
 
 export default authSlice.reducer;

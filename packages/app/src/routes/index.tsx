@@ -6,6 +6,7 @@ import About from "./About";
 import Home from "./Home";
 import Login from "./Login";
 import RateTrack from "./RateTrack";
+import Register from "./Register";
 
 export default function Routes() {
   return (
@@ -13,6 +14,7 @@ export default function Routes() {
       <BrowserRouter>
         <ReactRouter>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route
             path="/"
             element={

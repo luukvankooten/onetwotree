@@ -81,9 +81,22 @@ export default function Login() {
               Login
             </button>
           </div>
-          <Link className="hover:text-green-700 text-green-500" to="/forgotten">
-            Wachtwoord vergeten?
-          </Link>
+          <div className="mb-2">
+            <Link
+              className="hover:text-green-700 text-green-500"
+              to="/register"
+            >
+              Registeren
+            </Link>
+          </div>
+          <div>
+            <Link
+              className="hover:text-green-700 text-green-500"
+              to="/forgotten"
+            >
+              Wachtwoord vergeten?
+            </Link>
+          </div>
         </form>
       </div>
     </div>
