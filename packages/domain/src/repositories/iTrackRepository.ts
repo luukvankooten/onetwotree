@@ -1,4 +1,4 @@
-import Track, { SearchTrack } from "../entities/track";
+import { Track, SearchTrack } from "../../index";
 
 export default interface ITrackReposistory {
   search(query: string): Promise<SearchTrack[]>;

@@ -26,21 +26,10 @@ export default function ({
   app.use(passport.initialize());
   passport.use(jwtAuthenication({ userRepo }));
   app.use(express.json());
-  app.use("/auth", authController({ userRepo }));
-
-  const apiV1 = express.Router();
-  apiV1.use("/comments", commentControllers({ commentRepo }));
-  apiV1.use("/users", userControllers(userRepo));
-  apiV1.use("/tracks", trackControllers({ trackRepo, rateRepo, commentRepo }));
-  apiV1.use("/rates", rateControllers({ rateRepo }));
 
   const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     if (err) {
-      console.log(err.name);
-
-      if (process.env.NODE_ENV !== "production") {
-        console.error(err);
-      }
+      console.error(err);
 
       if ("NotFoundError" === err.name) {
         res.status(404);
@@ -56,10 +45,6 @@ export default function ({
         //Show http 500
         res.status(500).end();
 
-        if (process.env.NODE_ENV === "production") {
-          console.error(err);
-        }
-
         return;
       }
 
@@ -72,6 +57,14 @@ export default function ({
 
     next();
   };
+
+  app.use("/auth", authController({ userRepo }), errorHandler);
+
+  const apiV1 = express.Router();
+  apiV1.use("/comments", commentControllers({ commentRepo }));
+  apiV1.use("/users", userControllers(userRepo));
+  apiV1.use("/tracks", trackControllers({ trackRepo, rateRepo, commentRepo }));
+  apiV1.use("/rates", rateControllers({ rateRepo }));
 
   app.use(
     "/api/v1",

@@ -7,10 +7,13 @@ export enum Rating {
   FOUR,
   FIVE,
 }
-export default interface Rate {
+
+interface Rate {
   id: string;
   rating: Rating;
   user: UserInfo;
   createdAt: number;
   updatedAt?: number;
 }
+
+export default Rate;
