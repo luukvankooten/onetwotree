@@ -34,7 +34,7 @@ export default function (
     });
 
     const saved = await newRate.save();
-    track.comments.push(saved._id);
+    track.ratings.push(saved._id);
     await track.save();
 
     return mapPropsToRate(saved, await userRepo.get(rate.user.id));
