@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
-import Comment from "../features/comment/Comment";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { fetchTrack, getTrack } from "../features/tracks/tracksSlice";
-import { createComment } from "../features/comment/commentSlice";
-import Create from "../features/comment/components/Create";
-import Rating from "../features/ratings/Rating";
-import { getOveralRateing } from "@12tree/domain/src/entities/track";
+import {
+  fetchTrack,
+  getTrackBySpotifyId,
+} from "../features/tracks/tracksSlice";
+import Rating from "../features/tracks/ratings/Rating";
+import Create from "../features/tracks/comments/components/Create";
+import Show from "../features/tracks/comments/components/Show";
 
 export default function RateTrack() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const track = useAppSelector(getTrack(id || ""));
+  const track = useAppSelector(getTrackBySpotifyId(id || ""));
 
   useEffect(() => {
-    console.log(id);
     if (id && !track) {
       dispatch(fetchTrack(id));
     }
@@ -31,12 +31,18 @@ export default function RateTrack() {
   return (
     <div>
       <figure className="flex">
-        <img className="object-fit h-full rounded" src={track.cover} />
+        <img
+          className="object-fit h-full rounded"
+          src={track.cover}
+          alt="album cover"
+        />
         <figcaption>{track.name}</figcaption>
       </figure>
-      <Rating rates={track.ratings} rating={getOveralRateing(track)} />
+      <Rating track={track} />
       <Create trackId={track.id} />
-      <Comment comments={track.comments} />
+      {track.comments.map((comment, i) => (
+        <Show comment={comment} index={i} />
+      ))}
     </div>
   );
 }

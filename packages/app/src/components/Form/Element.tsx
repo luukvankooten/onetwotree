@@ -24,7 +24,7 @@ export default function Element<T extends FieldValues>({
         className="block text-gray-700 text-lg font-bold mb-2"
         htmlFor={name}
       >
-        Wachtwoord
+        {labelText}
       </label>
       <input
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 text-lg leading-tight focus:outline-none focus:shadow-outline"

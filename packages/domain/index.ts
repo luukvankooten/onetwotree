@@ -8,12 +8,11 @@ export type {
 export { isTokenExpired, hash, verify } from "./src/entities/user";
 
 export type { default as Rate } from "./src/entities/rating";
+export { Rating } from "./src/entities/rating";
 
-export type {
-  default as Track,
-  SearchTrack,
-  getOveralRateing,
-} from "./src/entities/track";
+export type { default as Track, SearchTrack } from "./src/entities/track";
+
+export { getOveralRateing } from "./src/entities/track";
 
 export type { default as Comment } from "./src/entities/comment";
 

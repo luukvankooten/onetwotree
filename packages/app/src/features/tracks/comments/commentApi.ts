@@ -1,6 +1,5 @@
-import apiFetch from "../../utils/apiFetch";
 import { Comment } from "@12tree/domain";
-import { access } from "fs";
+import apiFetch from "../../../utils/apiFetch";
 
 export async function createComment(
   trackId: string,

@@ -1,7 +1,7 @@
 import { Comment } from "@12tree/domain";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import useToggle from "../../../hooks/useToggle";
-import { remove, removeComment, selectComment } from "../commentSlice";
+import { useAppDispatch } from "../../../../app/hooks";
+import useToggle from "../../../../hooks/useToggle";
+import { removeComment } from "../commentActions";
 import Edit from "./Edit";
 
 type ShowProps = {

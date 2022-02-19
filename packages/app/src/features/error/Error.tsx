@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { getError } from "./errorSlice";
 
 export default function ErrorNotice() {
   const error = useAppSelector(getError);
-
-  useEffect(() => {
-    console.error(error);
-  }, []);
 
   if (!error) {
     return null;

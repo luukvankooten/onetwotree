@@ -1,18 +1,14 @@
 import { Track } from "@12tree/domain";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AppThunk, RootState } from "../../app/store";
+import { RootState } from "../../app/store";
 import { getAccessToken, getUser } from "../auth/authSlice";
 import {
   createComment,
   removeComment,
   updateComment,
-} from "../comment/commentSlice";
-import {
-  createRating,
-  removeRating,
-  updateRating,
-} from "../ratings/ratingsSlice";
-import * as api from "./tracksApi";
+} from "./comments/commentActions";
+import { obtainRating } from "./ratings/RatingActions";
+import * as trackApi from "./tracksApi";
 
 interface TrackState {
   tracks: Track[];
@@ -21,7 +17,7 @@ interface TrackState {
 const initialState: TrackState = { tracks: [] };
 
 const _getTrackIndex = (id: string, state: TrackState) =>
-  state.tracks.findIndex((track) => track.spotifyId === id);
+  state.tracks.findIndex((track) => track.id === id);
 
 const _getTrack = (id: string, state: TrackState) =>
   state.tracks[_getTrackIndex(id, state)];
@@ -49,29 +45,6 @@ const _getTrackIndexByCommentId = (
   return [trackIndex, commentIndex];
 };
 
-const _getTrackIndexByRatingId = (
-  id: string,
-  state: TrackState
-): [number, number] => {
-  let ratingIndex = -1;
-
-  let trackIndex = state.tracks.findIndex((track) => {
-    return (
-      track.ratings.findIndex((ratings, index) => {
-        const found = ratings.id === id;
-
-        if (found) {
-          ratingIndex = index;
-        }
-
-        return found;
-      }) > -1
-    );
-  });
-
-  return [trackIndex, ratingIndex];
-};
-
 export const fetchTrack = createAsyncThunk(
   "track/get",
   async (id: string, thunkApi) => {
@@ -84,7 +57,7 @@ export const fetchTrack = createAsyncThunk(
       return track;
     }
 
-    return await api.fetchTrack(id, getAccessToken(state));
+    return await trackApi.fetchTrack(id, getAccessToken(state));
   }
 );
 
@@ -98,9 +71,6 @@ export const trackSlice = createSlice({
         if (!_getTrack(action.payload.id, state)) {
           state.tracks.push(action.payload);
         }
-      })
-      .addCase(fetchTrack.rejected, (state, action) => {
-        console.error(action.payload);
       })
       .addCase(createComment.fulfilled, (state, action) => {
         const id = action.meta.arg.trackId;
@@ -133,43 +103,31 @@ export const trackSlice = createSlice({
           state.tracks[index].comments[commentIndex] = action.payload;
         }
       })
-      .addCase(createRating.fulfilled, (state, action) => {
-        const id = action.meta.arg.trackId;
+      .addCase(obtainRating.fulfilled, (state, action) => {
+        const track = _getTrack(action.meta.arg.id, state);
 
-        const index = _getTrackIndex(id, state);
-
-        if (index > -1) {
-          state.tracks[index].ratings.push(action.payload);
+        if (!track) {
+          return;
         }
-      })
-      .addCase(updateRating.fulfilled, (state, action) => {
-        const [index, ratingIndex] = _getTrackIndexByRatingId(
-          action.payload.id,
-          state
+
+        const index = track.ratings.findIndex(
+          (rating) => rating.id === action.payload.id
         );
 
-        if (index > -1 && ratingIndex > -1) {
-          state.tracks[index].ratings[index] = action.payload;
-        }
-      })
-      .addCase(removeRating.fulfilled, (state, action) => {
-        const [index, ratingIndex] = _getTrackIndexByRatingId(
-          action.payload.id,
-          state
-        );
-
-        if (index > -1 && ratingIndex > -1) {
-          state.tracks[index].ratings.splice(index, 1);
-        }
+        track.ratings[index !== -1 ? index : track.ratings.length] =
+          action.payload;
       });
   },
 });
+
+export const getTrackBySpotifyId = (spotifyId: string) => (state: RootState) =>
+  state.tracks.tracks.find((track) => track.spotifyId === spotifyId);
 
 export const getTrack = (id: string) => (state: RootState) =>
   _getTrack(id, state.tracks);
 
 export const getUserRate = (id: string) => (state: RootState) =>
-  _getTrack(id, state.tracks).ratings.find(
+  _getTrack(id, state.tracks)?.ratings.find(
     (rate) => rate.user.id === getUser(state)?.id
   );
 

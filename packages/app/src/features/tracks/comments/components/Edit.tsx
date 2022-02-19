@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Comment } from "@12tree/domain";
-import { updateComment } from "../commentSlice";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { useEffect } from "react";
+import { useAppDispatch } from "../../../../app/hooks";
+import { updateComment } from "../commentActions";
 
 type FormData = {
   comment: string;

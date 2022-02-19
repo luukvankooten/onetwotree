@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User } from "@12tree/domain";
 import { RootState } from "../../app/store";
 import { fetchByCredentials, fetchByToken } from "./authApi";
-import { Cookies } from "react-cookie";
 
 export enum Status {
   IDLE,

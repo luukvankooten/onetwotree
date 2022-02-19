@@ -8,11 +8,7 @@ interface BarProps {
 type BarForm = { query: string };
 
 export default function Bar({ trigger, onSubmit }: BarProps) {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<BarForm>();
+  const { register, handleSubmit } = useForm<BarForm>();
 
   const submit = handleSubmit((data) => onSubmit(data.query));
 

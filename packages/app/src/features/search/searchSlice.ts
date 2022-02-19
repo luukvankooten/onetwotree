@@ -1,6 +1,6 @@
 import { SearchTrack } from "@12tree/domain/src/entities/track";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState, store } from "../../app/store";
+import { RootState } from "../../app/store";
 import { getAccessToken } from "../auth/authSlice";
 import { searchTrackApi } from "./searchApi";
 

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { useAppDispatch } from "../../../app/hooks";
-import { add, createComment } from "../commentSlice";
+import { useAppDispatch } from "../../../../app/hooks";
+import { createComment } from "../commentActions";
 
 type FormData = {
   comment: string;

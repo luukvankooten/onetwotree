@@ -1,4 +1,4 @@
-import { Action, AnyAction, createSlice } from "@reduxjs/toolkit";
+import { AnyAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 const initialState: Error | null = null;
@@ -10,7 +10,11 @@ function isRejectedAction(action: AnyAction) {
 export const errorSlice = createSlice({
   name: "error",
   initialState,
-  reducers: {},
+  reducers: {
+    add(state, action) {
+      state = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder.addMatcher(isRejectedAction, (state, action) => {
       console.log(action);
@@ -22,5 +26,7 @@ export const errorSlice = createSlice({
 export const hasError = (state: RootState) => state.error != null;
 
 export const getError = (state: RootState): Error | null => state.error;
+
+export const { add } = errorSlice.actions;
 
 export default errorSlice.reducer;

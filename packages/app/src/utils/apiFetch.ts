@@ -3,7 +3,8 @@ import { Unauthorized } from "@12tree/domain";
 async function ApiFetch<T>(
   accessToken: string,
   path: string,
-  requestInit?: RequestInit
+  requestInit?: RequestInit,
+  basePath: string = "/api/v1/"
 ): Promise<T> {
   const host = process.env.REACT_APP_API_URL || "";
 
@@ -11,7 +12,7 @@ async function ApiFetch<T>(
   headers.append("Authorization", `Bearer ${accessToken}`);
   headers.append("Content-Type", "application/json");
 
-  const response = await fetch(`${host}/api/v1/${path}`, {
+  const response = await fetch(`${host}${basePath}${path}`, {
     headers,
     ...requestInit,
   });

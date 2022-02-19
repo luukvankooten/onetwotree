@@ -1,4 +1,4 @@
-import { User, Unauthorized } from "@12tree/domain";
+import { User } from "@12tree/domain";
 
 export async function fetchByCredentials(login: {
   password: string;
@@ -31,8 +31,6 @@ export async function fetchByToken(token: string): Promise<[number, User]> {
       redirect: "follow",
     }
   );
-
-  console.log(Unauthorized);
 
   return [response.status, (await response.json()) as User];
 }
