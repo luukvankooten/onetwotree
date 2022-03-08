@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   fetchTrack,
@@ -8,13 +8,16 @@ import {
 import Rating from "../features/tracks/ratings/Rating";
 import Create from "../features/tracks/comments/components/Create";
 import Show from "../features/tracks/comments/components/Show";
+import Button from "../components/Button/Button";
 
-export default function RateTrack() {
+export default function Track() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const track = useAppSelector(getTrackBySpotifyId(id || ""));
 
   useEffect(() => {
+    console.log(id);
     if (id && !track) {
       dispatch(fetchTrack(id));
     }
@@ -38,6 +41,13 @@ export default function RateTrack() {
         />
         <figcaption>{track.name}</figcaption>
       </figure>
+      <Button
+        onClick={() => {
+          navigate(`./ratings`);
+        }}
+      >
+        Test
+      </Button>
       <Rating track={track} />
       <Create trackId={track.id} />
       {track.comments.map((comment, i) => (

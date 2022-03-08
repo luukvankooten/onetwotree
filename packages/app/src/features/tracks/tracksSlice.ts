@@ -131,4 +131,7 @@ export const getUserRate = (id: string) => (state: RootState) =>
     (rate) => rate.user.id === getUser(state)?.id
   );
 
+export const getRatings = (id: string) => (state: RootState) =>
+  _getTrack(id, state.tracks)?.ratings;
+
 export default trackSlice.reducer;

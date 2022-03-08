@@ -17,7 +17,6 @@ export default function Login() {
   });
 
   const onSubmit = form.handleSubmit(async (data) => {
-    console.log(data);
     authenticate({ method: "credentials", ...data });
   });
 

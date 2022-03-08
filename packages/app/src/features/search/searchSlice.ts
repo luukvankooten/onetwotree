@@ -39,6 +39,23 @@ export const searchSlice = createSlice({
   },
 });
 
-export const searchedTracks = (state: RootState) => state.search;
+export const searchTracksByQuery = (query: string) => (state: RootState) => {
+  const normalizedQuery = query.toLowerCase().split(" ");
+
+  return state.search.items.filter((item) => {
+    const name = item.name.toLowerCase();
+
+    return (
+      normalizedQuery.filter((q) => {
+        const hasTrackName = name.includes(q);
+        const hasArtists =
+          item.artists.filter((name) => name.toLowerCase().includes(q)).length >
+          0;
+
+        return hasTrackName || hasArtists;
+      }).length > 0
+    );
+  });
+};
 
 export default searchSlice.reducer;

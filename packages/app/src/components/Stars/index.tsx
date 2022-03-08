@@ -9,7 +9,7 @@ type TupleStars = [Star, Star, Star, Star, Star];
 
 interface StarsProps {
   userRating?: Rating;
-  onChange: (stars: Rating) => void;
+  onChange?: (stars: Rating) => void;
   given: Rating;
 }
 
@@ -62,7 +62,9 @@ export default function Stars({ userRating, onChange, given }: StarsProps) {
 
     setStars(newStars);
 
-    onChange(newStars.filter((val) => val.filled).length);
+    if (onChange) {
+      onChange(newStars.filter((val) => val.filled).length);
+    }
   };
 
   const handleLeave = (
@@ -80,15 +82,6 @@ export default function Stars({ userRating, onChange, given }: StarsProps) {
     setStars(newStars);
   };
 
-  const removeAll = () => {
-    setStars(
-      Array.from({ length: 5 }, () => ({
-        filled: false,
-        locked: false,
-      })) as TupleStars
-    );
-  };
-
   return (
     <React.Fragment>
       {stars.map((star, key) => (
@@ -101,7 +94,6 @@ export default function Stars({ userRating, onChange, given }: StarsProps) {
           {key < given && !star.filled ? "⭐️" : star.filled ? "🌟" : "★"}
         </span>
       ))}
-      <span onClick={removeAll}>Remove</span>
     </React.Fragment>
   );
 }
