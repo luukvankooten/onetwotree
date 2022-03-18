@@ -7,7 +7,7 @@ interface CardProps {
 
 export default function RatingCard({ rate }: CardProps) {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    <div className="rounded overflow-hidden shadow-lg bg-white">
       <div className="px-6 pt-10 pb-4 text-5xl text-center">
         <ShowStars given={rate.rating} />
       </div>

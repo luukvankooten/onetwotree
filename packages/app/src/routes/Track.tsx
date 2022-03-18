@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
-  fetchTrack,
   getTrackBySpotifyId,
+  fetchTrackBySpotifyId,
 } from "../features/tracks/tracksSlice";
 import Rating from "../features/tracks/ratings/Rating";
 import Create from "../features/tracks/comments/components/Create";
@@ -19,7 +19,7 @@ export default function Track() {
   useEffect(() => {
     console.log(id);
     if (id && !track) {
-      dispatch(fetchTrack(id));
+      dispatch(fetchTrackBySpotifyId(id));
     }
   });
 
