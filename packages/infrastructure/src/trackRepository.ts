@@ -129,5 +129,32 @@ export default function (
     return mapPropsToTrack(track, userRepo);
   }
 
-  return { search, get, update, delete: remove, create, findBySpotifyId };
+  async function findByUserId(userId: string) {
+    let tracks = await TrackModel.find()
+      .populate("comments")
+      .populate("ratings")
+      .exec();
+
+    tracks = tracks.filter(
+      (doc) =>
+        doc.comments.some((com) => com.user_id === userId) ||
+        doc.ratings.some((rat) => rat.user_id === userId)
+    );
+
+    console.log(tracks);
+
+    return await Promise.all(
+      tracks.map((track) => mapPropsToTrack(track, userRepo))
+    );
+  }
+
+  return {
+    search,
+    get,
+    update,
+    delete: remove,
+    create,
+    findBySpotifyId,
+    findByUserId,
+  };
 }

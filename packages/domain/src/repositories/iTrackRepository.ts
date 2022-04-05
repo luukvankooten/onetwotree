@@ -7,4 +7,5 @@ export default interface ITrackReposistory {
   delete(id: string): Promise<Track>;
   create(id: string): Promise<Track>;
   findBySpotifyId(spotifyId: string): Promise<Track>;
+  findByUserId(userId: string): Promise<Track[]>;
 }

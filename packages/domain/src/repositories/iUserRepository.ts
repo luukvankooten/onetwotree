@@ -1,5 +1,6 @@
 import User, { UserFriend, UserInfo } from "../entities/user";
 import Comment from "../entities/comment";
+import { Track } from "../..";
 
 export default interface IUserReposistory {
   create(user: Omit<User, "friends">): Promise<User>;

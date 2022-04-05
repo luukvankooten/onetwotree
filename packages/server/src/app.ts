@@ -62,7 +62,10 @@ export default function ({
 
   const apiV1 = express.Router();
   apiV1.use("/comments", commentControllers({ commentRepo }));
-  apiV1.use("/users", userControllers(userRepo));
+  apiV1.use(
+    "/users",
+    userControllers({ userRepo, rateRepo, commentRepo, trackRepo })
+  );
   apiV1.use("/tracks", trackControllers({ trackRepo, rateRepo, commentRepo }));
   apiV1.use("/rates", rateControllers({ rateRepo }));
 

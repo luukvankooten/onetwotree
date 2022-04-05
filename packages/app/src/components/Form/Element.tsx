@@ -40,9 +40,12 @@ export default function Element<T extends FieldValues>({
       {
         //@ts-ignore
         errors[name] && (
-          //@ts-ignore
           <p className="text-red-500 text-xs">
-            * {errors[name.toString()].message}
+            *{" "}
+            {
+              //@ts-ignore
+              errors[name.toString()].message
+            }
           </p>
         )
       }
