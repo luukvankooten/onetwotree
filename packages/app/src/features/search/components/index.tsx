@@ -1,20 +1,27 @@
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { searchTrack } from "../searchSlice";
+import { searchTrack, searchTracksByQuery } from "../searchSlice";
 import Bar from "./Bar";
 import Item from "./Item";
 import { Link } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Search() {
+  const [query, setQuery] = useState("");
   const dispatch = useAppDispatch();
-  const items = useAppSelector((state) => {
-    return state.search.items;
-  });
+  const items = useAppSelector(searchTracksByQuery(query));
 
-  const trigger = (q: string) => {
-    setTimeout(() => {
-      dispatch(searchTrack(q));
-    }, 500);
-  };
+  useEffect(() => {
+    if (!!query.trim() && items.length === 0) {
+      dispatch(searchTrack(query));
+    }
+  }, [query, dispatch, items.length]);
+
+  const trigger = useCallback(
+    (q: string) => {
+      setQuery(q);
+    },
+    [setQuery]
+  );
 
   return (
     <div className="border rounded-lg bg-white">
@@ -22,7 +29,7 @@ export default function Search() {
         <Bar onSubmit={(q) => console.log(q)} trigger={trigger} />
       </div>
       {items.slice(0, 10).map((item, index) => (
-        <Link to={`/rate-track/${item.id}`}>
+        <Link to={`/tracks/${item.id}`}>
           <div className="border-b last:border-b-0 rounded" key={index}>
             <Item item={item} />
           </div>

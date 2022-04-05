@@ -7,6 +7,7 @@ import {
 import { Types } from "mongoose";
 import { mapPropsToComment } from "./mappers";
 import { MongooseModels } from "./schemas";
+import comment from "./schemas/comment";
 
 export default function (
   { TrackModel, CommentModel }: MongooseModels,
@@ -32,8 +33,11 @@ export default function (
     let index = track.comments.push(savedComment._id);
     const savedTrack = await track.save();
     const user = await userRepo.get(comment.user.id);
+    const persitedComment = await mapPropsToComment(savedComment, user);
 
-    return mapPropsToComment(savedComment, user);
+    await userRepo.addUserComment(persitedComment);
+
+    return persitedComment;
   }
 
   async function get(id: string) {
@@ -79,10 +83,29 @@ export default function (
     return mapPropsToComment(updatedComment, comment.user);
   }
 
+  async function getByIds(ids: string[]) {
+    const comments = await CommentModel.find({
+      _id: {
+        $in: ids.map((id) => new Types.ObjectId(id)),
+      },
+    });
+
+    let resolvedComments = await Promise.all(
+      comments.map(async (comment) => {
+        const user = await userRepo.get(comment.user_id);
+
+        return mapPropsToComment(comment, user);
+      })
+    );
+
+    return resolvedComments;
+  }
+
   return {
     create,
     get,
     update,
     delete: remove,
+    getByIds,
   };
 }

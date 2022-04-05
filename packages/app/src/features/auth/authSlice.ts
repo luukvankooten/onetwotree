@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User } from "@12tree/domain";
 import { RootState } from "../../app/store";
 import { fetchByCredentials, fetchByToken } from "./authApi";
-import { Cookies } from "react-cookie";
 
 export enum Status {
   IDLE,
@@ -108,12 +107,20 @@ export const getStatus = (state: RootState) => state.auth.load.status;
 export const isAuthenicated = (state: RootState) =>
   state.auth.load.status === Status.AUTHENICATED;
 
-export const getAccessToken = (state: RootState) => {
+export const getUser = (state: RootState) => {
+  if (state.auth.load.status === Status.AUTHENICATED) {
+    return state.auth.load.user;
+  }
+
+  throw new Error("No user authenicated");
+};
+
+export const getAccessToken = (state: RootState): string => {
   if (state.auth.load.status === Status.AUTHENICATED) {
     return state.auth.load.user.token.accessToken;
   }
 
-  return "";
+  throw new Error("No access token!");
 };
 
 export default authSlice.reducer;

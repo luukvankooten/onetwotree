@@ -1,5 +1,23 @@
 import Comment from "./comment";
-import Rate, { Rating } from "./rating";
+import { Rating } from "./rating";
+import Rate from "./rating";
+
+export interface SearchTrack {
+  id: string;
+  name: string;
+  cover: string | undefined;
+  artists: string[];
+}
+
+export function getOveralRateing(track: Track): Rating {
+  const sum = track.ratings
+    .map((rating) => rating.rating)
+    .reduce((p, c) => p + c, 0);
+
+  const average = sum / track.ratings.length;
+
+  return Math.round(average);
+}
 
 export default interface Track {
   id: string;
@@ -11,20 +29,4 @@ export default interface Track {
   ratings: Rate[];
   createdAt: number;
   updatedAt?: number;
-}
-
-export interface SearchTrack {
-  id: string;
-  name: string;
-  cover: string | undefined;
-  artists: string[];
-}
-
-export function getOveralRateing(track: Track): number {
-  const sum = track.ratings
-    .map((rating) => rating.rating)
-    .reduce((p, c) => p + c, 0);
-  const average = sum / track.ratings.length || 0;
-
-  return Math.round(average * 2) / 2;
 }

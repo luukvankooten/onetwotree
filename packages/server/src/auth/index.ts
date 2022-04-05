@@ -43,10 +43,12 @@ export function jwtAuthenication({
       return done(err, undefined);
     }
 
-    const user = await userRepo.getWithToken(nonAuthenicatedUser.id);
+    let user;
 
-    if (!user) {
-      return done(null, undefined);
+    try {
+      user = await userRepo.getWithToken(nonAuthenicatedUser.id);
+    } catch (error) {
+      return done(error, undefined);
     }
 
     req.user = user;

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 interface BarProps {
@@ -8,19 +9,23 @@ interface BarProps {
 type BarForm = { query: string };
 
 export default function Bar({ trigger, onSubmit }: BarProps) {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<BarForm>();
+  const { register, handleSubmit, watch } = useForm<BarForm>();
 
   const submit = handleSubmit((data) => onSubmit(data.query));
+  const watchSearch = watch(["query"]);
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) =>
+      trigger(value?.query || "")
+    );
+    return () => subscription.unsubscribe();
+  }, [watchSearch, trigger, watch]);
 
   return (
     <form className="flex w-auto h-14" onSubmit={submit}>
       <input
         className="flex-1 px-3 py-3 rounded-l bg-transparent text-lg"
-        {...register("query", { onChange: (ev) => trigger(ev.target.value) })}
+        {...register("query")}
         type="search"
         placeholder="Lekker nummertje"
         autoComplete="off"

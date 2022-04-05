@@ -30,10 +30,10 @@ const validatorObject = yup
 
 export const updateUservalidatorObject = yup
   .object({
-    name: name.optional(),
-    username: username.min(5).max(255).optional(),
-    email: email.optional(),
-    password: password.min(8).max(255).optional(),
+    name: yup.string().optional(),
+    username: yup.string().min(5).max(255).optional(),
+    email: yup.string().optional(),
+    password: yup.string().optional().min(8).max(255),
   })
   .required();
 

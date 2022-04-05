@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.rating {
+  /*unicode-bidi: bidi-override;*/
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  /*position: relative;*/
+  /*width: 1.1em;*/
+}
+
+.rating > span:before {
+  content: "☆";
+}
+
+.rating > span .select:before {
+  content: "⭐️";
+}
+
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+  content: "⭐️";
+}
+
+.rating > span:active ~ span:before {
+  content: "⭐️";
+}

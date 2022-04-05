@@ -44,7 +44,9 @@ export default function ({
   router.get(
     "/spotify/:id",
     asyncHandler(async (req, res) => {
-      res.json(await trackRepo.findBySpotifyId(req.params.id.toString()));
+      const track = await trackRepo.findBySpotifyId(req.params.id.toString());
+
+      res.json(track);
     })
   );
 

@@ -34,7 +34,7 @@ export default function (
     });
 
     const saved = await newRate.save();
-    track.comments.push(saved._id);
+    track.ratings.push(saved._id);
     await track.save();
 
     return mapPropsToRate(saved, await userRepo.get(rate.user.id));
@@ -68,5 +68,17 @@ export default function (
     return mapPropsToRate(deletedRate, await userRepo.get(deletedRate.user_id));
   }
 
-  return { get, create, update, delete: remove };
+  async function getByUserId(id: string) {
+    const ratings = await RateModel.find({ user_id: id });
+
+    const user = await userRepo.get(id);
+
+    const domainRatings = await Promise.all(
+      ratings.map((rating) => mapPropsToRate(rating, user))
+    );
+
+    return domainRatings;
+  }
+
+  return { get, create, update, delete: remove, getByUserId };
 }

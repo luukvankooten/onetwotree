@@ -1,6 +1,5 @@
 import { User } from "@12tree/domain";
 import authSlice, { AuthState, fetchAuth, Status } from "./authSlice";
-import { AnyAction } from "@reduxjs/toolkit";
 
 describe("auth reducer", () => {
   it("should return  handle HTTP 200 status if promise is fulfilled", () => {

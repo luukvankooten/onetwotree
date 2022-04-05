@@ -10,10 +10,25 @@ export type UserNeo4j = {
   token_expiresIn: number;
   token_createdAt: number;
   followers: Relationship[];
+  comments: Relationship[];
 };
 
-export default (neode: Neode) =>
-  neode.model<UserNeo4j>("User", {
+export type UserComment = {
+  id: string;
+  comment_id: string;
+};
+
+export default (neode: Neode) => ({
+  UserCommentModel: neode.model<UserComment>("UserComment", {
+    id: {
+      type: "uuid",
+      primary: true,
+      required: true,
+    },
+    comment_id: { type: "string" },
+  }),
+
+  UserModel: neode.model<UserNeo4j>("User", {
     id: {
       type: "uuid",
       primary: true,
@@ -37,4 +52,13 @@ export default (neode: Neode) =>
         accepted: "boolean",
       },
     },
-  });
+    comments: {
+      type: "relationships",
+      relationship: "COMMENT",
+      target: "UserComment",
+      direction: "out",
+      cascade: "detach",
+      eager: true,
+    },
+  }),
+});

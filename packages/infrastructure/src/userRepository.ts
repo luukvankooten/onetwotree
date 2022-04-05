@@ -1,4 +1,10 @@
-import { IUserReposistory, NotFoundError, User } from "@12tree/domain";
+import {
+  IUserReposistory,
+  NotFoundError,
+  User,
+  Comment,
+  ICommentRepository,
+} from "@12tree/domain";
 import {
   mapUserToProps,
   mapPropsToUserWithToken,
@@ -7,13 +13,13 @@ import {
 import createUserModel, { UserNeo4j } from "./schemas/user";
 import { Node, Relationship } from "neode";
 import { UserFriend } from "@12tree/domain/src/entities/user";
+import crypto from "crypto";
 
-type IUserReposistoryDependencies = {
-  UserModel: ReturnType<typeof createUserModel>;
-};
+type IUserReposistoryDependencies = ReturnType<typeof createUserModel>;
 
 export default function ({
   UserModel,
+  UserCommentModel,
 }: IUserReposistoryDependencies): IUserReposistory {
   async function findBy(field: string, argument: string) {
     const query = await UserModel.query()
@@ -169,6 +175,37 @@ export default function ({
     return followers;
   }
 
+  async function getUserCommentsIds(userId: string) {
+    const user = await UserModel.find(userId);
+
+    if (!user) {
+      throw new NotFoundError();
+    }
+
+    const comments = user
+      .get<Relationship[]>("comments")
+      .map((req) => req.endNode().get<string>("comment_id"));
+
+    return comments;
+  }
+
+  async function addUserComment(comment: Comment) {
+    const user = await UserModel.find(comment.user.id);
+
+    if (!user) {
+      throw new NotFoundError();
+    }
+
+    const createComment = await UserCommentModel.create({
+      id: crypto.randomUUID(),
+      comment_id: comment.id,
+    });
+
+    await user.relateTo(createComment, "comments");
+
+    return comment;
+  }
+
   return {
     create,
     getByToken,
@@ -182,5 +219,7 @@ export default function ({
     unfollow,
     accept,
     follow,
+    getUserCommentsIds,
+    addUserComment,
   };
 }

@@ -4,23 +4,19 @@ import { loginUserValidatorObject } from "@12tree/validation";
 import { Link, Navigate } from "react-router-dom";
 import useAuth from "../features/auth/useAuth";
 import { Status } from "../features/auth/authSlice";
+import Element from "../components/Form/Element";
+import SubmitButton from "../components/Form/SubmitButton";
 
 type LoginData = ReturnType<typeof loginUserValidatorObject.validateSync>;
 
 export default function Login() {
   const [status, authenticate] = useAuth();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    trigger,
-  } = useForm<LoginData>({
+  const form = useForm<LoginData>({
     resolver: yupResolver(loginUserValidatorObject),
   });
 
-  const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
+  const onSubmit = form.handleSubmit(async (data) => {
     authenticate({ method: "credentials", ...data });
   });
 
@@ -37,53 +33,35 @@ export default function Login() {
           </div>
         </div>
         <form onSubmit={onSubmit}>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-lg font-bold mb-2"
-              htmlFor="email"
+          <Element
+            labelText="Email"
+            name="email"
+            type="email"
+            formHook={form}
+          />
+          <Element
+            labelText="Wachtwoord"
+            name="password"
+            type="password"
+            formHook={form}
+          />
+          <SubmitButton text="inloggen" />
+          <div className="mb-2">
+            <Link
+              className="hover:text-green-700 text-green-500"
+              to="/register"
             >
-              Email
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 text-lg leading-tight focus:outline-none focus:shadow-outline"
-              {...register("email", { onBlur: () => trigger("email") })}
-              id="email"
-              type="text"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs">* {errors.email.message}</p>
-            )}
+              Registeren
+            </Link>
           </div>
-          <div className="mb-8">
-            <label
-              className="block text-gray-700 text-lg font-bold mb-2"
-              htmlFor="password"
+          <div>
+            <Link
+              className="hover:text-green-700 text-green-500"
+              to="/forgotten"
             >
-              Wachtwoord
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 text-lg leading-tight focus:outline-none focus:shadow-outline"
-              {...register("password", { onBlur: () => trigger("password") })}
-              id="password"
-              type="password"
-            />
-            {errors.password && (
-              <p className="text-red-500 text-xs">
-                * {errors.password.message}
-              </p>
-            )}
+              Wachtwoord vergeten?
+            </Link>
           </div>
-          <div className="mb-8">
-            <button
-              type="submit"
-              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-2 px-4 rounded w-full text-base inline-flex items-center justify-center"
-            >
-              Login
-            </button>
-          </div>
-          <Link className="hover:text-green-700 text-green-500" to="/forgotten">
-            Wachtwoord vergeten?
-          </Link>
         </form>
       </div>
     </div>

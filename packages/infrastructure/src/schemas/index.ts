@@ -1,18 +1,17 @@
 import { default as createTrackModel } from "./track";
 import { default as createCommentModel } from "./comment";
 import { default as createRatingModel } from "./rating";
-import { default as createUserModel } from "./user";
+import { default as createNeo4jModels } from "./user";
 import { Connection as MongooseConnection } from "mongoose";
 import Neode from "neode";
 
-export interface Models {
+export type MongooseModels = {
   TrackModel: ReturnType<typeof createTrackModel>;
   CommentModel: ReturnType<typeof createCommentModel>;
   RateModel: ReturnType<typeof createRatingModel>;
-  UserModel: ReturnType<typeof createUserModel>;
-}
+};
 
-export type MongooseModels = Omit<Models, "UserModel">;
+export type Models = MongooseModels & ReturnType<typeof createNeo4jModels>;
 
 export function buildMongooseModels(
   mongoose: MongooseConnection
@@ -26,5 +25,5 @@ export function buildMongooseModels(
 
 export default (mongoose: MongooseConnection, neode: Neode): Models => ({
   ...buildMongooseModels(mongoose),
-  UserModel: createUserModel(neode),
+  ...createNeo4jModels(neode),
 });

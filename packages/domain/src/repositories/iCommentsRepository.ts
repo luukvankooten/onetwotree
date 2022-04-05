@@ -1,4 +1,4 @@
-import Comment from "../entities/comment";
+import { Comment } from "../../index";
 
 export default interface ICommentRepository {
   get(id: string): Promise<Comment>;
@@ -11,4 +11,5 @@ export default interface ICommentRepository {
     trackId: string,
     comment: Omit<Comment, "id" | "createdAt">
   ): Promise<Comment>;
+  getByIds(ids: string[]): Promise<Comment[]>;
 }

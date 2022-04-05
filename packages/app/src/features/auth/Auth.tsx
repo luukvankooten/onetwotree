@@ -1,7 +1,7 @@
-import { stat } from "fs";
 import React from "react";
 import { useCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";
+import { Loading } from "../../components/Loading";
 import { Status } from "./authSlice";
 import useAuth from "./useAuth";
 
@@ -10,8 +10,8 @@ type AuthProps = {
 };
 
 export default function Auth({ children }: AuthProps) {
-  const [cookie, setCookie] = useCookies(["jwt"]);
-  const [status, dispatch] = useAuth();
+  const [cookie] = useCookies(["jwt"]);
+  const [status] = useAuth();
 
   if (status === Status.LOADING || (status === Status.IDLE && cookie["jwt"])) {
     return <Loading />;
@@ -22,8 +22,4 @@ export default function Auth({ children }: AuthProps) {
   }
 
   return <Navigate to="/login" />;
-}
-
-function Loading() {
-  return <div>Loading</div>;
 }
