@@ -90,6 +90,7 @@ export default function Stars({ userRating, onChange, given }: StarsProps) {
           onMouseLeave={(event) => handleLeave(event, key)}
           onClick={(event) => handleClick(event, key)}
           key={key}
+          className="cursor-pointer"
         >
           {key < given && !star.filled ? "⭐️" : star.filled ? "🌟" : "★"}
         </span>

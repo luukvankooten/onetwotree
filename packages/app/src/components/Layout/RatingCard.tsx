@@ -1,4 +1,5 @@
 import { Rate } from "@12tree/domain";
+import { Link } from "react-router-dom";
 import ShowStars from "../Stars/Show";
 
 interface CardProps {
@@ -13,7 +14,7 @@ export default function RatingCard({ rate }: CardProps) {
       </div>
       <div className="px-6 pt-4 pb-2">
         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-          {rate.user.username}
+          <Link to={`/users/${rate.user.id}`}>{rate.user.username}</Link>
         </span>
         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
           {rate.createdAt}

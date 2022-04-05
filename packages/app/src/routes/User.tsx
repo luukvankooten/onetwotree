@@ -13,6 +13,8 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { Loading } from "../components/Loading";
 import { default as InfoUser } from "../components/User";
 import useToggle from "../hooks/useToggle";
+import Button from "../components/Button/Button";
+import { getUser } from "../features/auth/authSlice";
 
 export default function User() {
   const { id } = useParams();
@@ -22,6 +24,7 @@ export default function User() {
   const comments = useAppSelector(getUserComments(`${id}`));
   const ratings = useAppSelector(getUserRatings(`${id}`));
   const [value, toggle] = useToggle();
+  const { id: userId } = useAppSelector(getUser);
 
   useEffect(() => {
     if (tracksIds.status === "loading") {
@@ -43,23 +46,32 @@ export default function User() {
             Account
           </div>
           <div className="text-right w-1/2">
-            <button
-              className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full"
-              onClick={() => toggle()}
-            >
-              🖊
-            </button>
+            {user.payload.id === userId && (
+              <>
+                <Button
+                  onClick={() => toggle()}
+                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full"
+                >
+                  🖊
+                </Button>
+                <Button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
+                  🗑
+                </Button>
+              </>
+            )}
           </div>
         </div>
-        <InfoUser user={user.payload} editMode={value} />
+        <div className="rounded bg-white p-2 shadow-lg">
+          <InfoUser user={user.payload} editMode={value} toggle={toggle} />
+        </div>
       </div>
       <div className="mb-6">
         <div className="font-bold text-xl mb-4 rounded bg-white p-2 shadow-lg">
           Gegeven opmerkingen
         </div>
-        <div className="flex">
+        <div className="flex flex-wrap -mx-2 -my-2">
           {comments.map((comment, key) => (
-            <div className="w-full mb-2" key={key}>
+            <div className="w-1/2 my-2 px-2" key={key}>
               <ShowComment index={key} comment={comment} />
             </div>
           ))}

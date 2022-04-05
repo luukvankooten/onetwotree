@@ -19,7 +19,7 @@ export default function Bar({ trigger, onSubmit }: BarProps) {
       trigger(value?.query || "")
     );
     return () => subscription.unsubscribe();
-  }, [watchSearch]);
+  }, [watchSearch, trigger, watch]);
 
   return (
     <form className="flex w-auto h-14" onSubmit={submit}>

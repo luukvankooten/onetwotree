@@ -1,39 +1,66 @@
-import {
-  render,
-  fireEvent,
-  waitFor,
-  screen,
-  act,
-} from "@testing-library/react";
-import { Comment } from "@12tree/domain";
+import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import Show from "../components/Show";
 import { Provider } from "react-redux";
-import { store } from "../../../../app/store";
+import configureStore from "redux-mock-store";
+import { Status } from "../../../auth/authSlice";
+import * as domain from "@12tree/domain";
+import thunk from "redux-thunk";
+import { BrowserRouter } from "react-router-dom";
 
 describe("comment test", () => {
-  xit("should toggle edit mode and save", async () => {
-    const comment: Comment = {
-      id: "",
+  it("should toggle edit mode and save", async () => {
+    const mockStore = configureStore([thunk]);
+
+    const comment: domain.Comment = {
+      id: "6f8209f3-0a93-445a-83ff-c1c21f9637c7",
+      comment: "hhello",
+      createdAt: Date.now(),
       user: {
-        id: "",
+        id: "bb657676-1a17-4a76-95de-2f350e6890ca",
         username: "foo",
         email: "foo@foo.com",
         name: "foo baz",
         friends: [],
       },
-      comment: "foo baz bar",
-      createdAt: Date.now(),
     };
 
-    // const index = store.getState().tracks.comments.indexOf(comment);
+    const store = mockStore({
+      auth: {
+        load: {
+          status: Status.AUTHENICATED,
+          user: {
+            id: "bb657676-1a17-4a76-95de-2f350e6890ca",
+            username: "foo",
+            email: "foo@foo.com",
+            name: "foo baz",
+            friends: [],
+            token: {
+              accessToken: "",
+              refreshToken: "",
+              expiresIn: 1649148903967,
+              createdAt: 1649148903967,
+            },
+          },
+        },
+      },
+      tracks: [
+        {
+          id: "7b4f70bc-70f6-482d-933c-a2521d6d14c2",
+          comments: [comment],
+          ratings: [],
+        },
+      ],
+    });
 
     const { getByTestId } = render(
-      <Provider store={store}>
-        <Show index={1} comment={comment} />
-      </Provider>
+      <BrowserRouter>
+        <Provider store={store}>
+          <Show index={1} comment={comment} />
+        </Provider>
+      </BrowserRouter>
     );
 
-    fireEvent.click(screen.getByText("Wijzigen"));
+    fireEvent.click(screen.getByText("🖊"));
 
     const value =
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -43,13 +70,13 @@ describe("comment test", () => {
     fireEvent.change(commentInput, { target: { value } });
 
     await waitFor(() => expect(commentInput).toHaveValue(value));
-    const submit = screen.getByRole("button");
+    const submit = screen.getByText("👍");
+    comment.comment = value;
 
-    await act(async () => {
-      fireEvent.click(submit);
-    });
+    fireEvent.submit(submit);
 
-    expect(screen.getByTestId("comment-show")).toHaveTextContent(value);
-    // expect(store.getState().comment.comments[index].comment).toBe(value);
+    await waitFor(() =>
+      expect(screen.getByTestId("comment-show").textContent).toBe(value)
+    );
   });
 });

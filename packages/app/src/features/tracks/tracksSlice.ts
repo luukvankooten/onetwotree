@@ -48,8 +48,6 @@ export const fetchTrackBySpotifyId = createAsyncThunk(
     const state = thunkApi.getState() as RootState;
     const track = _getTrack(id, state.tracks);
 
-    console.log(track);
-
     if (track) {
       return track;
     }
@@ -63,8 +61,6 @@ export const fetchTrack = createAsyncThunk(
   async (id: string, thunkApi) => {
     const state = thunkApi.getState() as RootState;
     const track = _getTrack(id, state.tracks);
-
-    console.log(track);
 
     if (track) {
       return track;
@@ -161,6 +157,9 @@ export const getUserInvoledTracks = (userId: string) => (state: RootState) =>
         0 ||
       track.ratings.filter((rating) => rating.user.id === userId).length > 0
   );
+
+export const getComments = (id: string) => (state: RootState) =>
+  _getTrack(id, state.tracks)?.comments;
 
 export const getUserComments = (userId: string) => (state: RootState) =>
   getUserInvoledTracks(userId)(state)

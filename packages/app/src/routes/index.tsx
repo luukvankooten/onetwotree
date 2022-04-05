@@ -9,6 +9,7 @@ import Track from "./Track";
 import Register from "./Register";
 import Ratings from "./Ratings";
 import User from "./User";
+import Comments from "./Comments";
 
 export default function Routes() {
   return (
@@ -29,7 +30,7 @@ export default function Routes() {
             <Route path="about" element={<About />} />
             <Route path="tracks/:id" element={<Track />} />
             <Route path="tracks/:id/ratings" element={<Ratings />} />
-            <Route path="tracks/:id/comments" element={<Ratings />} />
+            <Route path="tracks/:id/comments" element={<Comments />} />
             <Route path="users/:id" element={<User />} />
           </Route>
         </ReactRouter>

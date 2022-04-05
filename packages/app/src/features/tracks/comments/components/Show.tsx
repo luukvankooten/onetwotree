@@ -1,6 +1,6 @@
 import { Comment } from "@12tree/domain";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../../../app/hooks";
 import useToggle from "../../../../hooks/useToggle";
 import { getUser } from "../../../auth/authSlice";
@@ -33,7 +33,8 @@ export default function Show({ index, comment }: ShowProps) {
           Datum: {new Date(comment.createdAt.valueOf()).toLocaleDateString()}
         </dt>
         <dt className="text-sm font-medium text-gray-500">
-          geplaats door: {comment.user.name}
+          geplaats door:{" "}
+          <Link to={`/users/${user.id}`}>{comment.user.name}</Link>
         </dt>
       </div>
       <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

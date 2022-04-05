@@ -14,13 +14,13 @@ export default function Search() {
     if (!!query.trim() && items.length === 0) {
       dispatch(searchTrack(query));
     }
-  }, [query]);
+  }, [query, dispatch, items.length]);
 
   const trigger = useCallback(
     (q: string) => {
       setQuery(q);
     },
-    [query]
+    [setQuery]
   );
 
   return (
