@@ -21,8 +21,8 @@ describe("track slice", () => {
       cover: "https://example.com",
       comments: [],
       ratings: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1649148903967,
+      updatedAt: 1649148903967,
     };
 
     const action = {
@@ -44,8 +44,8 @@ describe("track slice", () => {
       cover: "https://example.com",
       comments: [],
       ratings: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1649148903967,
+      updatedAt: 1649148903967,
     };
 
     const action = {
@@ -67,8 +67,8 @@ describe("track slice", () => {
       cover: "https://example.com",
       comments: [],
       ratings: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1649148903967,
+      updatedAt: 1649148903967,
     };
 
     const action = {
@@ -92,7 +92,7 @@ describe("track slice", () => {
         {
           id: "6f8209f3-0a93-445a-83ff-c1c21f9637c7",
           comment: "hhello",
-          createdAt: Date.now(),
+          createdAt: 1649148903967,
           user: {
             id: "bb657676-1a17-4a76-95de-2f350e6890ca",
             username: "foo",
@@ -103,8 +103,8 @@ describe("track slice", () => {
         },
       ],
       ratings: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1649148903967,
+      updatedAt: 1649148903967,
     };
 
     const action = {
@@ -116,7 +116,7 @@ describe("track slice", () => {
       payload: {
         id: "6f8209f3-0a93-445a-83ff-c1c21f9637c7",
         comment: "ediit",
-        createdAt: Date.now(),
+        createdAt: 1649148903967,
         user: {
           id: "bb657676-1a17-4a76-95de-2f350e6890ca",
           username: "foo",
@@ -143,7 +143,7 @@ describe("track slice", () => {
         {
           id: "6f8209f3-0a93-445a-83ff-c1c21f9637c7",
           comment: "hhello",
-          createdAt: Date.now(),
+          createdAt: 1649148903967,
           user: {
             id: "bb657676-1a17-4a76-95de-2f350e6890ca",
             username: "foo",
@@ -154,8 +154,8 @@ describe("track slice", () => {
         },
       ],
       ratings: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1649148903967,
+      updatedAt: 1649148903967,
     };
 
     const action = {
@@ -167,7 +167,7 @@ describe("track slice", () => {
       payload: {
         id: "6f8209f3-0a93-445a-83ff-c1c21f9637c7",
         comment: "ediit",
-        createdAt: Date.now(),
+        createdAt: 1649148903967,
         user: {
           id: "bb657676-1a17-4a76-95de-2f350e6890ca",
           username: "foo",
@@ -192,8 +192,8 @@ describe("track slice", () => {
       cover: "https://example.com",
       comments: [],
       ratings: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1649148903967,
+      updatedAt: 1649148903967,
     };
 
     const action = {
@@ -210,7 +210,7 @@ describe("track slice", () => {
       payload: {
         id: "6f8209f3-0a93-445a-83ff-c1c21f9637c7",
         comment: "ediit",
-        createdAt: Date.now(),
+        createdAt: 1649148903967,
         user: {
           id: "bb657676-1a17-4a76-95de-2f350e6890ca",
           username: "foo",
@@ -237,7 +237,7 @@ describe("track slice", () => {
         {
           id: "6f8209f3-0a93-445a-83ff-c1c21f9637c7",
           comment: "hhello",
-          createdAt: Date.now(),
+          createdAt: 1649148903967,
           user: {
             id: "bb657676-1a17-4a76-95de-2f350e6890ca",
             username: "foo",
@@ -248,8 +248,8 @@ describe("track slice", () => {
         },
       ],
       ratings: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1649148903967,
+      updatedAt: 1649148903967,
     };
 
     const state = {
@@ -262,7 +262,7 @@ describe("track slice", () => {
       {
         id: "6f8209f3-0a93-445a-83ff-c1c21f9637c7",
         comment: "hhello",
-        createdAt: Date.now(),
+        createdAt: 1649148903967,
         user: {
           id: "bb657676-1a17-4a76-95de-2f350e6890ca",
           username: "foo",

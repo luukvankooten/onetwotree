@@ -113,8 +113,6 @@ export const trackSlice = createSlice({
           state
         );
 
-        console.log(index, commentIndex, action);
-
         if (index > -1 && commentIndex > -1) {
           state.tracks[index].comments[commentIndex] = action.payload;
         }
