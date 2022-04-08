@@ -1,6 +1,6 @@
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import Show from "../components/Show";
-import { Provider } from "react-redux";
+import * as redux from "react-redux";
 import configureStore from "redux-mock-store";
 import { Status } from "../../../auth/authSlice";
 import * as domain from "@12tree/domain";
@@ -8,8 +8,11 @@ import thunk from "redux-thunk";
 import { BrowserRouter } from "react-router-dom";
 
 describe("comment test", () => {
-  it("should toggle edit mode and save", async () => {
+  it("should toggle edit mode and save and delete", async () => {
     const mockStore = configureStore([thunk]);
+    const useDispatchSpy = jest.spyOn(redux, "useDispatch");
+    const mockDispatchFn = jest.fn();
+    useDispatchSpy.mockReturnValue(mockDispatchFn);
 
     const comment: domain.Comment = {
       id: "6f8209f3-0a93-445a-83ff-c1c21f9637c7",
@@ -54,9 +57,9 @@ describe("comment test", () => {
 
     const { getByTestId } = render(
       <BrowserRouter>
-        <Provider store={store}>
+        <redux.Provider store={store}>
           <Show index={1} comment={comment} />
-        </Provider>
+        </redux.Provider>
       </BrowserRouter>
     );
 
@@ -78,5 +81,20 @@ describe("comment test", () => {
     await waitFor(() =>
       expect(screen.getByTestId("comment-show").textContent).toBe(value)
     );
+
+    fireEvent.click(screen.getByText("🖊"));
+    const editValue = "edited";
+
+    fireEvent.change(getByTestId("comment"), { target: { editValue } });
+    comment.comment = editValue;
+
+    fireEvent.submit(screen.getByText("👍"));
+
+    await waitFor(() =>
+      expect(screen.getByTestId("comment-show").textContent).toBe(editValue)
+    );
+
+    const remove = screen.getByText("🗑");
+    fireEvent.submit(remove);
   });
 });
