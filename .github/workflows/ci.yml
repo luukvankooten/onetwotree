@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - run: npm run build --if-present
-      - run: npm run test -ws app
+      - run: npm run test -w @12tree/app
 
   sonarcloud:
     name: SonarCloud
