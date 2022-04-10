@@ -25,6 +25,24 @@ function About() {
 
         <div className="flex">
           <p className="flex-1">
+            Token
+            <ul className="list-disc">
+              <li>expiresAt: int</li>
+              <li>refreshToken: int</li>
+              <li>accessToken: string</li>
+              <li>created: int</li>
+            </ul>
+          </p>
+          <p className="flex-1">
+            Token
+            <ul className="list-disc">
+              <li>expiresAt: int</li>
+              <li>refreshToken: int</li>
+              <li>accessToken: string</li>
+              <li>created: int</li>
+            </ul>
+          </p>
+          <p className="flex-1">
             User
             <ul className="list-disc">
               <li>Name: string</li>
@@ -60,11 +78,27 @@ function About() {
               <li>track: Track</li>
             </ul>
           </p>
+          <p className="flex-1">
+            Artist
+            <ul className="list-disc">
+              <li>artist: string</li>
+            </ul>
+          </p>
         </div>
-
-        <img alt="domain objects" src="/entities.png" />
-        <img alt="in ci/cd" src="/cicd.png" />
-        <img alt="in local" src="/local.png" />
+        <figure className="border-2 broder-grey rounded bg-white font-color-black mb-2">
+          <img alt="domain objects" src="/entities.png" />
+          <figcaption>Entitieten</figcaption>
+        </figure>
+        <figure className="border-2 broder-grey rounded bg-white font-color-black mb-2">
+          <img alt="in ci/cd" src="/cicd.png" />
+          <figcaption>
+            Continuous integration en continuous delivery op/door github
+          </figcaption>
+        </figure>
+        <figure className="border-2 broder-grey rounded bg-white font-color-black mb-2">
+          <img alt="in local" src="/local.png" />
+          <figcaption>Al testen in de fronted</figcaption>
+        </figure>
       </div>
     </React.Fragment>
   );
