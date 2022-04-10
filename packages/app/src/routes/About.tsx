@@ -37,15 +37,6 @@ function About() {
             </ul>
           </p>
           <p className="flex-1">
-            Token
-            <ul className="list-disc">
-              <li>expiresAt: int</li>
-              <li>refreshToken: int</li>
-              <li>accessToken: string</li>
-              <li>created: int</li>
-            </ul>
-          </p>
-          <p className="flex-1">
             User
             <ul className="list-disc">
               <li>Name: string</li>
