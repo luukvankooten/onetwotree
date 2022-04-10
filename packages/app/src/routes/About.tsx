@@ -7,12 +7,15 @@ function About() {
         <h1 className="text-xl font-semibold mb-2">About</h1>
 
         <p>
-          In dit project moet je muziek van spotify een rating geven maar ook
-          een opmerking achterlaten op een tijdstip in de track zoals
-          soundcloud. Gebruikers moeten een via spotify account hebben, daarmee
-          wordt ook ingelogd. Een rating bestaat uit 5 sterren 1 ster is heel
-          slecht en 5 is super goed. Iedere gebruiker kan ook een opmerking
-          achterlaten op een gedeelte van een track.
+          In dit project kunnen gebruikers opmerkingen achterlaten en liedjes
+          beoordelen dit is het zelfde idee als op SoundCloud. Gebruikers moeten
+          zich eerst laten registeren vervolgens kunnen zei doormiddel van de
+          zoek functie een liedje zoeken. Een beoordeling bestaat uit vijf
+          sterren aan de hand hiervan kan een gebruiker liedje beoordelen. Vijf
+          sterren is heel goed één ster is slecht. De opmerking is een veld
+          waarin tekst achtergelaten kan worden. Elke gebruiker die een account
+          heeft kan een opmerking of beoordeling maken. De gebruiker kan ook de
+          gegevens wijzigen van zijn account.
         </p>
         <p>
           De github url:{" "}
@@ -24,6 +27,24 @@ function About() {
         </p>
 
         <div className="flex">
+          <p className="flex-1">
+            Token
+            <ul className="list-disc">
+              <li>expiresAt: int</li>
+              <li>refreshToken: int</li>
+              <li>accessToken: string</li>
+              <li>created: int</li>
+            </ul>
+          </p>
+          <p className="flex-1">
+            Token
+            <ul className="list-disc">
+              <li>expiresAt: int</li>
+              <li>refreshToken: int</li>
+              <li>accessToken: string</li>
+              <li>created: int</li>
+            </ul>
+          </p>
           <p className="flex-1">
             User
             <ul className="list-disc">
@@ -60,11 +81,27 @@ function About() {
               <li>track: Track</li>
             </ul>
           </p>
+          <p className="flex-1">
+            Artist
+            <ul className="list-disc">
+              <li>artist: string</li>
+            </ul>
+          </p>
         </div>
-
-        <img alt="domain objects" src="/entities.png" />
-        <img alt="in ci/cd" src="/cicd.png" />
-        <img alt="in local" src="/local.png" />
+        <figure className="border-2 broder-grey rounded bg-white font-color-black mb-2">
+          <img alt="domain objects" src="/entities.png" />
+          <figcaption>Entitieten</figcaption>
+        </figure>
+        <figure className="border-2 broder-grey rounded bg-white font-color-black mb-2">
+          <img alt="in ci/cd" src="/cicd.png" />
+          <figcaption>
+            Continuous integration en continuous delivery op/door github
+          </figcaption>
+        </figure>
+        <figure className="border-2 broder-grey rounded bg-white font-color-black mb-2">
+          <img alt="in local" src="/local.png" />
+          <figcaption>Al testen in de fronted</figcaption>
+        </figure>
       </div>
     </React.Fragment>
   );
