@@ -30,7 +30,7 @@ export default function Register() {
         "",
         "/auth/register",
         { method: "POST", body: JSON.stringify(data) },
-        undefined
+        ""
       );
     } catch (err) {
       console.log(err);
